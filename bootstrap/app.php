@@ -26,7 +26,7 @@ $app->withFacades(true, [
     'Illuminate\Support\Facades\Event' => 'LumenEvent',
 ]);
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
