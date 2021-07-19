@@ -24,14 +24,18 @@ class BaiDu
     const BASE_URL = 'https://api.baidu.com';
 
 
+
+
     /**
      * BaiDu constructor.
-     * @param string $accountId
-     * @param string $password
+     * @param $accountName
+     * @param $password
+     * @param $token
      */
-    public function __construct($accountId = '',$password = ''){
-        $this->setAccountId($accountId);
+    public function __construct($accountName,$password,$token){
+        $this->setAccountName($accountName);
         $this->setAccountPassword($password);
+        $this->setToken($token);
     }
 
     /**

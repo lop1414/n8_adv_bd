@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Tools\CustomException;
-use App\Models\BdAccountModel;
-use App\Services\BdAccountService;
+use App\Models\BaiDuAccountModel;
+use App\Services\BaiDu\BaiDuAccountService;
 use Illuminate\Http\Request;
 
 class BdAccountController extends BaseController
@@ -16,7 +16,7 @@ class BdAccountController extends BaseController
      */
     public function __construct()
     {
-        $this->model = new BdAccountModel();
+        $this->model = new BaiDuAccountModel();
 
         parent::__construct();
     }
@@ -156,7 +156,7 @@ class BdAccountController extends BaseController
             ]);
         }
 
-        (new BdAccountService())->syncSubAccount($item);
+        (new BaiDuAccountService())->syncSubAccount($item);
 
 
         return $this->success();

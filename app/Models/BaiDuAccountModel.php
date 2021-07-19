@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class BdAccountModel extends BaseModel
+class BaiDuAccountModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'bd_accounts';
+    protected $table = 'baidu_accounts';
 
 
 
