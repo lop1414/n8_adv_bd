@@ -57,24 +57,28 @@ class BaiDuAccountService extends BaiDuService
 
         foreach ($list as $parentAccount){
             $baiduSdk = new BaiDuFeed($parentAccount['name'],$parentAccount['password'],$parentAccount['token']);
+            $saveData = [];
+
             foreach ($parentAccount['sub_account'] as  $item) {
                 $baiduSdk->setTargetAccountName($item['name']);
                 $data = $baiduSdk->getAccountFeed();
                 $data = $data[0];
 
-                $info = (new BaiDuFeedAccountModel())->where('account_id',$data['userId'])->first();
-                if(empty($info)){
-                    $info = new BaiDuFeedAccountModel();
-                }
-                $info->account_id = $data['userId'];
-                $info->balance = $data['balance'];
-                $info->budget = $data['budget'];
-                $info->balance_package = $data['balancePackage'];
-                $info->user_stat = $data['userStat'];
-                $info->ua_status = $data['uaStatus'];
-                $info->valid_flows = $data['validFlows'];
-                $info->save();
+                $saveData[] = [
+                    'id'             => $data['userId'],
+                    'balance'        => $data['balance'],
+                    'budget'         => $data['budget'],
+                    'balance_package'=> $data['balancePackage'],
+                    'user_stat'      => $data['userStat'],
+                    'ua_status'      => $data['uaStatus'],
+                    'valid_flows'    => json_encode($data['validFlows']),
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'updated_at'    => date('Y-m-d H:i:s')
+                ];
             }
+
+            $this->batchSave(BaiDuFeedAccountModel::class,$saveData);
+
         }
     }
 }

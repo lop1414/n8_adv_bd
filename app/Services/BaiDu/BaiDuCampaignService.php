@@ -4,7 +4,6 @@ namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Helpers\Functions;
-use App\Models\BaiDuFeedAccountModel;
 use App\Models\BaiDuFeedCampaignsModel;
 use App\Sdks\BaiDu\Feed\BaiDuFeed;
 

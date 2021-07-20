@@ -15,10 +15,17 @@ class BaiDuFeedAccountModel extends BaseModel
 
 
 
+    /**
+     * @var array
+     * 批量更新忽略字段
+     */
+    protected $updateIgnoreFields = [
+        'created_at'
+    ];
+
 
 
     protected $fillable = [
-        'account_id',
         'balance',
         'budget',
         'balance_package',
