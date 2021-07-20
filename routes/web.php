@@ -22,17 +22,17 @@ $router->group([
     'middleware' => ['center_menu_auth', 'admin_request_log', 'access_control_allow_origin']
 ], function () use ($router) {
     // 账户
-    $router->group(['prefix' => 'bd_account'], function () use ($router) {
-        $router->post('create', 'Admin\BdAccountController@create');
-        $router->post('update', 'Admin\BdAccountController@update');
-        $router->post('select', 'Admin\BdAccountController@select');
-        $router->post('get', 'Admin\BdAccountController@get');
-        $router->post('read', 'Admin\BdAccountController@read');
-        $router->post('enable', 'Admin\BdAccountController@enable');
-        $router->post('disable', 'Admin\BdAccountController@disable');
-        $router->post('delete', 'Admin\BdAccountController@delete');
-        $router->post('batch_enable', 'Admin\BdAccountController@batchEnable');
-        $router->post('batch_disable', 'Admin\BdAccountController@batchDisable');
-        $router->post('sync', 'Admin\BdAccountController@sync');
+    $router->group(['prefix' => 'baidu_account'], function () use ($router) {
+        $router->post('create', 'Admin\BaiDuAccountController@create');
+        $router->post('update', 'Admin\BaiDuAccountController@update');
+        $router->post('select', 'Admin\BaiDuAccountController@select');
+        $router->post('get', 'Admin\BaiDuAccountController@get');
+        $router->post('read', 'Admin\BaiDuAccountController@read');
+        $router->post('enable', 'Admin\BaiDuAccountController@enable');
+        $router->post('disable', 'Admin\BaiDuAccountController@disable');
+        $router->post('delete', 'Admin\BaiDuAccountController@delete');
+        $router->post('batch_enable', 'Admin\BaiDuAccountController@batchEnable');
+        $router->post('batch_disable', 'Admin\BaiDuAccountController@batchDisable');
+        $router->post('sync', 'Admin\BaiDuAccountController@sync');
     });
 });

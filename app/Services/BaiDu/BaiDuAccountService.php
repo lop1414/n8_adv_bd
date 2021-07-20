@@ -4,14 +4,13 @@ namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Helpers\Functions;
-use App\Common\Services\BaseService;
 use App\Models\BaiDuAccountModel;
 use App\Models\BaiDuFeedAccountModel;
 use App\Sdks\BaiDu\BaiDu;
 use App\Sdks\BaiDu\Feed\BaiDuFeed;
 
 
-class BaiDuAccountService extends BaseService
+class BaiDuAccountService extends BaiDuService
 {
 
 
@@ -54,21 +53,11 @@ class BaiDuAccountService extends BaseService
             $status = StatusEnum::ENABLE;
         }
 
-        $parentAccountList = (new BaiDuAccountModel())
-            ->where('parent_id',0)
-            ->get();
+        $list = $this->getAccount($accountIds,$status);
 
-        foreach ($parentAccountList as $parentAccount){
-            $list = (new BaiDuAccountModel())
-                ->where('parent_id',$parentAccount['id'])
-                ->where('status',$status)
-                ->when($accountIds,function ($query,$accountIds){
-                    return $query->whereIn('account_id',$accountIds);
-                })
-                ->get();
+        foreach ($list as $parentAccount){
             $baiduSdk = new BaiDuFeed($parentAccount['name'],$parentAccount['password'],$parentAccount['token']);
-
-            foreach ($list as  $item) {
+            foreach ($parentAccount['sub_account'] as  $item) {
                 $baiduSdk->setTargetAccountName($item['name']);
                 $data = $baiduSdk->getAccountFeed();
                 $data = $data[0];

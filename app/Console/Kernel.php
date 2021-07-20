@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\BaiDu\BaiDuSyncAccountFeedCommand;
+use App\Console\Commands\BaiDu\BaiDuSyncCampaignFeedCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         BaiDuSyncAccountFeedCommand::class,
+        BaiDuSyncCampaignFeedCommand::class
     ];
 
     /**
