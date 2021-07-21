@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 21/07/2021 10:42:32
+ Date: 21/07/2021 15:01:53
 */
 
 SET NAMES utf8mb4;
@@ -22,15 +22,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `baidu_feed_adgroups`;
 CREATE TABLE `baidu_feed_adgroups` (
-  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '推广单元ID',
-  `account_id` bigint(10) NOT NULL COMMENT '账户ID',
-  `campaign_feed_id` bigint(10) NOT NULL COMMENT '推广计划ID',
+  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '推广单元ID',
+  `account_id` bigint(11) NOT NULL COMMENT '账户ID',
+  `campaign_feed_id` bigint(11) NOT NULL COMMENT '推广计划ID',
   `adgroup_feed_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `pause` tinyint(4) NOT NULL COMMENT '启停',
   `status` tinyint(4) NOT NULL COMMENT '状态',
   `bid` int(11) NOT NULL COMMENT '出价',
   `bidtype` tinyint(4) NOT NULL COMMENT '优化目标和付费模式',
   `atp_feed_id` bigint(11) NOT NULL COMMENT '定向包ID',
+  `ocpc_trans_from` tinyint(4) NOT NULL COMMENT '接入方式',
+  `ocpc_bid` int(11) NOT NULL COMMENT '目标转化出价',
+  `ocpc_trans_type` tinyint(4) NOT NULL COMMENT '目标转化',
+  `ocpc_pay_mode` tinyint(4) NOT NULL COMMENT '付费模式',
   `extends` text COMMENT '扩展字段',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
