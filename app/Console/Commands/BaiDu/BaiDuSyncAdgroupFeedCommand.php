@@ -4,21 +4,23 @@ namespace App\Console\Commands\BaiDu;
 
 use App\Common\Console\BaseCommand;
 use App\Services\BaiDu\BaiDuAccountService;
+use App\Services\BaiDu\BaiDuAdgroupService;
+use App\Services\BaiDu\BaiDuCampaignService;
 
-class BaiDuSyncAccountFeedCommand extends BaseCommand
+class BaiDuSyncAdgroupFeedCommand extends BaseCommand
 {
     /**
      * 命令行执行命令
      * @var string
      */
-    protected $signature = 'baidu:sync_account_feed {--account_ids=} {--status=}';
+    protected $signature = 'baidu:sync_adgroup_feed {--account_ids=} {--status=}';
 
     /**
      * 命令描述
      *
      * @var string
      */
-    protected $description = '同步百度信息流账户';
+    protected $description = '同步百度信息流推广单元';
 
     /**
      * Create a new command instance.
@@ -42,11 +44,11 @@ class BaiDuSyncAccountFeedCommand extends BaseCommand
         }
 
 
-        $baiDuAccountService = new BaiDuAccountService();
+        $service = new BaiDuAdgroupService();
         $option = ['log' => true];
         $this->lockRun(
-            [$baiDuAccountService, 'syncAccountFeed'],
-            'baidu|sync_account_feed',
+            [$service, 'syncFeed'],
+            'baidu|sync_feed_adgroup',
             3600,
             $option,
             $param

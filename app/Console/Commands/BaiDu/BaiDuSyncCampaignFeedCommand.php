@@ -19,7 +19,7 @@ class BaiDuSyncCampaignFeedCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = '同步百度信息流计划信息';
+    protected $description = '同步百度信息流计划';
 
     /**
      * Create a new command instance.

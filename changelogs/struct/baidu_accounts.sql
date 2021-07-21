@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 19/07/2021 18:16:55
+ Date: 21/07/2021 10:42:16
 */
 
 SET NAMES utf8mb4;
@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `baidu_accounts`;
 CREATE TABLE `baidu_accounts` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `account_id` int(10) NOT NULL COMMENT '账户id',
+  `account_id` bigint(11) NOT NULL COMMENT '账户id',
   `name` varchar(50) NOT NULL COMMENT '名称',
   `token` varchar(50) NOT NULL COMMENT 'token',
   `ocpc_token` varchar(50) NOT NULL COMMENT 'OCPCToken',

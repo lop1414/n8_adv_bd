@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class BaiDuFeedCampaignsModel extends BaseModel
+class BaiDuFeedAdgroupModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'baidu_feed_campaigns';
+    protected $table = 'baidu_feed_adgroups';
 
 
     /**
@@ -26,15 +26,14 @@ class BaiDuFeedCampaignsModel extends BaseModel
 
     protected $fillable = [
         'account_id',
-        'campaign_feed_name',
-        'subject',
-        'budget',
+        'campaign_feed_id',
+        'adgroup_feed_name',
         'pause',
         'status',
-        'starttime',
-        'endtime',
-        'addtime',
-        'extends',
+        'bid',
+        'bidtype',
+        'atp_feed_id',
+        'extends'
     ];
 
 

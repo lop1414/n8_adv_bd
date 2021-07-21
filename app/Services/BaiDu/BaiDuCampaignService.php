@@ -4,7 +4,7 @@ namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Helpers\Functions;
-use App\Models\BaiDuFeedCampaignsModel;
+use App\Models\BaiDuFeedCampaignModel;
 use App\Sdks\BaiDu\Feed\BaiDuFeed;
 
 
@@ -54,7 +54,7 @@ class BaiDuCampaignService extends BaiDuService
                         'updated_at' => date('Y-m-d H:i:s'),
                     ];
                 }
-                $this->batchSave(BaiDuFeedCampaignsModel::class,$saveData);
+                $this->batchSave(BaiDuFeedCampaignModel::class,$saveData);
             }
         }
     }
