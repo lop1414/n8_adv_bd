@@ -4,6 +4,8 @@ namespace App\Sdks\BaiDu;
 
 
 
+use App\Sdks\BaiDu\Traits\Error;
+use App\Sdks\BaiDu\Traits\MultiRequest;
 use App\Sdks\BaiDu\Traits\OcpcToken;
 use App\Sdks\BaiDu\Traits\Token;
 use App\Sdks\BaiDu\Traits\Account;
@@ -17,6 +19,8 @@ class BaiDu
     use Token;
     use OcpcToken;
     use Request;
+    use MultiRequest;
+    use Error;
 
     /**
      * 公共接口地址

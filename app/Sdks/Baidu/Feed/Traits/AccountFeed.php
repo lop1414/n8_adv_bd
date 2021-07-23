@@ -7,18 +7,27 @@ trait AccountFeed
 {
 
 
-
     /**
+     * @param $accountNames
      * @return mixed
-     * 查询信息流账户信息
+     * 并发获取信息流账户信息
      */
-    public function getAccountFeed(){
+    public function multiGetAccountFeed($accountNames){
         $url = $this->getUrl('json/feed/v1/AccountFeedService/getAccountFeed');
-        $para = [
-            'accountFeedFields' => ["userId","balance","budget","balancePackage","userStat","uaStatus","validFlows"]
-        ];
 
-        return $this->authRequest($url, $para, 'POST');
+        $params = [];
+        foreach ($accountNames as $accountName){
+            $params[] = [
+                'body' => [
+                    'accountFeedFields' => ["userId","balance","budget","balancePackage","userStat","uaStatus","validFlows"]
+                ],
+                'header' =>  [
+                    'target' => $accountName
+                ]
+            ];
+        }
+
+        return $this->multiGet($url,$params);
     }
 
 }

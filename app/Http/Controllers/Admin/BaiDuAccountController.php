@@ -156,7 +156,7 @@ class BaiDuAccountController extends BaseController
             ]);
         }
 
-        (new BaiDuAccountService())->syncSubAccount($item);
+        (new BaiDuAccountService($item))->syncSubAccount();
 
 
         return $this->success();

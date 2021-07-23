@@ -7,21 +7,31 @@ trait CampaignFeed
 {
 
 
-
     /**
+     * @param $accountNames
      * @return mixed
-     * 查询信息流账户信息
+     * 并发获取信息流计划信息
      */
-    public function getCampaignFeed(){
+    public function multiGetCampaignFeed($accountNames){
         $url = $this->getUrl('json/feed/v1/CampaignFeedService/getCampaignFeed');
-        $para = [
-            'campaignFeedFields' => [
-                "campaignFeedId","campaignFeedName","subject","appinfo","budget","starttime","endtime",
-                "bgtctltype","pause","status","bstype","addtime","shadow","schedule",
-            ]
-        ];
 
-        return $this->authRequest($url, $para, 'POST');
+        $params = [];
+        foreach ($accountNames as $accountName){
+            $params[] = [
+                'body' => [
+                    'campaignFeedFields' => [
+                        "campaignFeedId","campaignFeedName","subject","appinfo","budget","starttime","endtime",
+                        "bgtctltype","pause","status","bstype","addtime","shadow","schedule",
+                    ]
+                ],
+                'header' =>  [
+                    'target' => $accountName
+                ]
+            ];
+        }
+
+        return $this->multiGet($url,$params);
     }
+
 
 }
