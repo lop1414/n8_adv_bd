@@ -52,4 +52,22 @@ trait Error
     }
 
 
+    /**
+     * @param $code
+     * @return bool
+     * 是否计划不存在的错误
+     */
+    public function isCampaignFeedIdNotExistsByCode($code){
+        $errorCodes = [
+            912401411, // 计划不存在
+        ];
+
+        if(in_array($code, $errorCodes)){
+            return true;
+        }
+
+        return false;
+    }
+
+
 }
