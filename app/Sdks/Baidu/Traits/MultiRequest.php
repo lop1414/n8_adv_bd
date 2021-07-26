@@ -98,7 +98,7 @@ $i++;
             }
 
             $succ[] = [
-                'data' => $result['body'],
+                'data' => $result,
                 'req' => $v['req'],
             ];
         }
