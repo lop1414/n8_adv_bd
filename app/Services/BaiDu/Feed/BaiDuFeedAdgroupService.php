@@ -42,7 +42,7 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
 
             $account = $this->getAccountByName($accountName);
 
-            foreach ($item['data']['data'] as $adgroup){
+            foreach ($item['data']['body']['data'] as $adgroup){
                 $saveData[] = [
                     'id'                => $adgroup['adgroupFeedId'],
                     'account_id'        => $account['account_id'],

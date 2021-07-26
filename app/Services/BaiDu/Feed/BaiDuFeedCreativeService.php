@@ -41,7 +41,7 @@ class BaiDuFeedCreativeService extends BaiDuFeedService
                 : $item['req']['param']['header']['username'];
 
             $account = $this->getAccountByName($accountName);
-            foreach ($item['data']['data'] as $creative){
+            foreach ($item['data']['body']['data'] as $creative){
                 $saveData[] = [
                     'id'                => $creative['creativeFeedId'],
                     'account_id'        => $account['account_id'],

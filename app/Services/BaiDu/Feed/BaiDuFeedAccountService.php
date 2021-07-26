@@ -19,7 +19,7 @@ class BaiDuFeedAccountService extends BaiDuFeedService
         $list = $this->sdk->multiGetAccountFeed($accountNames);
         foreach ($list as $item){
 
-            foreach ($item['data']['data'] as $data){
+            foreach ($item['data']['body']['data'] as $data){
                 $saveData[] = [
                     'id'             => $data['userId'],
                     'balance'        => $data['balance'],

@@ -26,7 +26,7 @@ class BaiDuFeedCampaignService extends BaiDuFeedService
 
             $account = $this->getAccountByName($accountName);
 
-            foreach ($item['data']['data'] as $campaign){
+            foreach ($item['data']['body']['data'] as $campaign){
                 $saveData[] = [
                     'id'                => $campaign['campaignFeedId'],
                     'account_id'        => $account['account_id'],
