@@ -26,7 +26,6 @@ class BaiDuFeedCreativeModel extends BaseModel
 
     protected $fillable = [
         'account_id',
-        'campaign_feed_id',
         'adgroup_feed_id',
         'creative_feed_name',
         'materialstyle',
