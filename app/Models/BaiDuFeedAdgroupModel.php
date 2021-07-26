@@ -37,7 +37,8 @@ class BaiDuFeedAdgroupModel extends BaseModel
         'ocpc_bid',
         'ocpc_trans_type',
         'ocpc_pay_mode',
-        'extends'
+        'extends',
+        'remark_status'
     ];
 
 

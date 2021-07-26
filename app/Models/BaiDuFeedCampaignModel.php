@@ -35,6 +35,7 @@ class BaiDuFeedCampaignModel extends BaseModel
         'endtime',
         'addtime',
         'extends',
+        'remark_status'
     ];
 
 

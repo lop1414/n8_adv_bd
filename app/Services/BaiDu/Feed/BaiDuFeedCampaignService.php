@@ -39,6 +39,7 @@ class BaiDuFeedCampaignService extends BaiDuFeedService
                     'endtime'           => isset($campaign['endtime']) ?  date('Y-m-d H:i:s',strtotime($campaign['endtime'])): null,
                     'addtime'           => date('Y-m-d H:i:s',strtotime($campaign['addtime'])),
                     'extends'           => json_encode($campaign),
+                    'remark_status'     => '',
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s'),
                 ];

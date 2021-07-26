@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 21/07/2021 10:42:40
+ Date: 26/07/2021 15:06:44
 */
 
 SET NAMES utf8mb4;
@@ -33,6 +33,7 @@ CREATE TABLE `baidu_feed_campaigns` (
   `endtime` timestamp NULL DEFAULT NULL COMMENT '推广结束时间',
   `addtime` timestamp NULL DEFAULT NULL COMMENT '添加时间',
   `extends` text COMMENT '扩展字段',
+  `remark_status` varchar(50) NOT NULL DEFAULT '' COMMENT '备注状态',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,

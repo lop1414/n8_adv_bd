@@ -34,7 +34,8 @@ class BaiDuFeedCreativeModel extends BaseModel
         'idea_type',
         'show_mt',
         'addtime',
-        'extends'
+        'extends',
+        'remark_status'
     ];
 
 

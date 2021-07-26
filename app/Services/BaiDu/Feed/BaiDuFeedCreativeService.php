@@ -54,6 +54,7 @@ class BaiDuFeedCreativeService extends BaiDuFeedService
                     'show_mt'           => $creative['showMt'] ?? 0,
                     'addtime'           => date('Y-m-d H:i:s',strtotime($creative['addtime'])),
                     'extends'           => json_encode($creative),
+                    'remark_status'     => '',
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s'),
                 ];

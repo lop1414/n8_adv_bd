@@ -58,6 +58,7 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
                     'ocpc_trans_type'   => $adgroup['ocpc']['transType'] ?? 0,
                     'ocpc_pay_mode'     => $adgroup['ocpc']['payMode'] ?? 0,
                     'extends'           => json_encode($adgroup),
+                    'remark_status'     => '',
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s'),
                 ];
