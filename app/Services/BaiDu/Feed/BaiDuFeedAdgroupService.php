@@ -35,6 +35,8 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
         $saveData = [];
         $list = $this->sdk->multiGetAdGroupFeed($params);
         foreach ($list as $item){
+            // 计划不存在处理
+            $this->handleCampaignFeedIdNotExists($item);
 
             $accountName = isset($item['req']['param']['header']['target'])
                 ? $item['req']['param']['header']['target']

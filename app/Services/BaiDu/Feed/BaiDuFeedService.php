@@ -4,7 +4,11 @@ namespace App\Services\BaiDu\Feed;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Helpers\Functions;
+use App\Enums\RemarkStatusEnum;
 use App\Models\BaiDuAccountModel;
+use App\Models\BaiDuFeedAdgroupModel;
+use App\Models\BaiDuFeedCampaignModel;
+use App\Models\BaiDuFeedCreativeModel;
 use App\Sdks\BaiDu\Feed\BaiDuFeed;
 use App\Services\BaiDu\BaiDuService;
 
@@ -89,4 +93,42 @@ class BaiDuFeedService extends BaiDuService
     public function syncItem($accountNames){}
 
 
+
+    /**
+     * @param $item
+     * 计划不存在 异常处理 - 更新备注状态
+     */
+    public function handleCampaignFeedIdNotExists($item){
+        if($this->sdk->hasCampaignFeedIdNotExists($item['data'])){
+
+            // 计划被删除 更新状态
+            foreach($item['data']['header']['failures'] as $failure){
+                if(!$this->sdk->isCampaignFeedIdNotExistsByCode($failure['code'])){
+                    continue;
+                }
+
+                $campaign = (new BaiDuFeedCampaignModel())
+                    ->where('id',$failure['id'])
+                    ->first();
+                if(empty($campaign)) continue;
+
+                $campaign->remark_status =  RemarkStatusEnum::DELETE;
+                $campaign->save();
+
+                $adgroups = (new BaiDuFeedAdgroupModel())
+                    ->where('campaign_feed_id',$failure['id'])
+                    ->get();
+
+                foreach ($adgroups as $adgroup){
+
+                    $adgroup->remark_status =  RemarkStatusEnum::DELETE;
+                    $adgroup->save();
+
+                    (new BaiDuFeedCreativeModel())
+                        ->where('adgroup_feed_id',$adgroup['id'])
+                        ->update(['remark_status' => RemarkStatusEnum::DELETE]);
+                }
+            }
+        }
+    }
 }
