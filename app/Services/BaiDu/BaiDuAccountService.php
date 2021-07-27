@@ -4,19 +4,11 @@ namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
 use App\Models\BaiDuAccountModel;
-use App\Sdks\BaiDu\Feed\BaiDuFeed;
+use App\Models\BaiDuFeedAccountModel;
 
 
 class BaiDuAccountService extends BaiDuService
 {
-
-
-
-
-    public function setSdk($accountName,$password,$token){
-        $this->sdk = new BaiDuFeed($accountName,$password,$token);
-        return $this;
-    }
 
 
     public function syncSubAccount(){
@@ -39,5 +31,39 @@ class BaiDuAccountService extends BaiDuService
             ];
             $info->save();
         }
+    }
+
+
+    /**
+     * @param $subAccount
+     * 同步信息流账户
+     */
+    public function syncItem($subAccount){
+        $accountNames = [];
+        foreach ($subAccount as $account){
+            $this->setAccountMap($account);
+            $accountNames[] = $account['name'];
+        }
+        $saveData = [];
+        $list = $this->sdk->multiGetAccountFeed($accountNames);
+        foreach ($list as $item){
+
+            foreach ($item['data']['body']['data'] as $data){
+                $saveData[] = [
+                    'id'             => $data['userId'],
+                    'balance'        => $data['balance'],
+                    'budget'         => $data['budget'],
+                    'balance_package'=> $data['balancePackage'],
+                    'user_stat'      => $data['userStat'],
+                    'ua_status'      => $data['uaStatus'],
+                    'valid_flows'    => json_encode($data['validFlows']),
+                    'created_at'     => date('Y-m-d H:i:s'),
+                    'updated_at'     => date('Y-m-d H:i:s')
+                ];
+            }
+        }
+
+        if(empty($saveData)) return;
+        $this->batchSave(BaiDuFeedAccountModel::class,$saveData);
     }
 }

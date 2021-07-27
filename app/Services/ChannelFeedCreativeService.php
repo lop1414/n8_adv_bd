@@ -9,9 +9,9 @@ use App\Common\Helpers\Functions;
 use App\Common\Services\BaseService;
 use App\Common\Services\SystemApi\UnionApiService;
 use App\Common\Tools\CustomException;
-use App\Models\BaiDuFeedCreativeModel;
-use App\Models\ChannelFeedCreativeLogModel;
-use App\Models\ChannelFeedCreativeModel;
+use App\Models\BaiDuCreativeModel;
+use App\Models\ChannelCreativeLogModel;
+use App\Models\ChannelCreativeModel;
 use Illuminate\Support\Facades\DB;
 
 class ChannelFeedCreativeService extends BaseService
@@ -64,14 +64,14 @@ class ChannelFeedCreativeService extends BaseService
      * 更新
      */
     public function update($data){
-        $channelCreativeModel = new ChannelFeedCreativeModel();
+        $channelCreativeModel = new ChannelCreativeModel();
         $channelCreative = $channelCreativeModel->where('feed_creative_id', $data['feed_creative_id'])
             ->where('platform', $data['platform'])
             ->first();
 
         $flag = $this->buildFlag($channelCreative);
         if(empty($channelCreative)){
-            $channelCreative = new ChannelFeedCreativeModel();
+            $channelCreative = new ChannelCreativeModel();
         }
 
         $channelCreative->feed_creative_id = $data['feed_creative_id'];
@@ -81,7 +81,7 @@ class ChannelFeedCreativeService extends BaseService
         $ret = $channelCreative->save();
         if($ret && !empty($channelCreative->feed_creative_id) && $flag != $this->buildFlag($channelCreative)){
             $this->createChannelAdLog([
-                'channel_feed_creative_id' => $channelCreative->id,
+                'channel_creative_id' => $channelCreative->id,
                 'feed_creative_id' => $data['feed_creative_id'],
                 'channel_id' => $data['channel_id'],
                 'platform'   => $data['platform'],
@@ -118,7 +118,7 @@ class ChannelFeedCreativeService extends BaseService
      * 创建渠道-计划日志
      */
     protected function createChannelAdLog($data){
-        $channelFeedCreativeLogModel = new ChannelFeedCreativeLogModel();
+        $channelFeedCreativeLogModel = new ChannelCreativeLogModel();
         $channelFeedCreativeLogModel->channel_feed_creative_id = $data['channel_feed_creative_id'];
         $channelFeedCreativeLogModel->feed_creative_id = $data['feed_creative_id'];
         $channelFeedCreativeLogModel->channel_id = $data['channel_id'];
@@ -231,9 +231,9 @@ class ChannelFeedCreativeService extends BaseService
         $lastMaxId = 0;
         do{
 
-            $baiDuFeedCreatives = (new BaiDuFeedCreativeModel())
+            $baiDuFeedCreatives = (new BaiDuCreativeModel())
                 ->where('id','>',$lastMaxId)
-//                ->whereBetween('addtime', [$startTime, $endTime])
+                ->whereBetween('addtime', [$startTime, $endTime])
                 ->skip(0)
                 ->take(1000)
                 ->orderBy('id')
@@ -246,7 +246,6 @@ class ChannelFeedCreativeService extends BaseService
 
                 $material = json_decode($baiDuFeedCreative->extends->material,true);
                 $monitorUrl = $material['monitorUrl'] ?? '';
-
                 if(empty($monitorUrl)) continue;
                 if(strpos($monitorUrl, $keyword) === false) continue;
 
@@ -256,8 +255,8 @@ class ChannelFeedCreativeService extends BaseService
                 $unionApiService = new UnionApiService();
 
 
-                if(!empty($param['channel_id'])){
-                    $channel = $unionApiService->apiReadChannel(['id' => $param['channel_id']]);
+                if(!empty($param['android_channel_id'])){
+                    $channel = $unionApiService->apiReadChannel(['id' => $param['android_channel_id']]);
                     $channelExtends = $channel['channel_extends'] ?? [];
                     $channel['admin_id'] = $channelExtends['admin_id'] ?? 0;
                     unset($channel['extends']);
@@ -265,7 +264,7 @@ class ChannelFeedCreativeService extends BaseService
 
                     $this->update([
                         'feed_creative_id' => $baiDuFeedCreative->id,
-                        'channel_id' => $param['channel_id'],
+                        'channel_id' => $param['android_channel_id'],
                         'platform' => PlatformEnum::DEFAULT,
                         'extends' => [
                             'monitor_url' => $monitorUrl,

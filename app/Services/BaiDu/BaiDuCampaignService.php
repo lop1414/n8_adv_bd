@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services\BaiDu\Feed;
+namespace App\Services\BaiDu;
 
-use App\Models\BaiDuFeedCampaignModel;
+use App\Models\BaiDuCampaignModel;
 
 
-class BaiDuFeedCampaignService extends BaiDuFeedService
+class BaiDuCampaignService extends BaiDuService
 {
 
 
@@ -48,7 +48,7 @@ class BaiDuFeedCampaignService extends BaiDuFeedService
         }
 
         if(empty($saveData)) return;
-        $this->batchSave(BaiDuFeedCampaignModel::class,$saveData);
+        $this->batchSave(BaiDuCampaignModel::class,$saveData);
     }
 
 

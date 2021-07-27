@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\BaiDu\Feed;
+namespace App\Services\BaiDu;
 
-use App\Models\BaiDuFeedAdgroupModel;
-use App\Models\BaiDuFeedCampaignModel;
+use App\Models\BaiDuCampaignModel;
+use App\Models\BaiDuCreativeModel;
 
 
-class BaiDuFeedAdgroupService extends BaiDuFeedService
+class BaiDuCreativeService extends BaiDuService
 {
 
     public function syncItem($subAccount){
@@ -16,7 +16,7 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
             // 获取计划ID
             $campaignIds = [];
 
-            $campaigns = (new BaiDuFeedCampaignModel())
+            $campaigns = (new BaiDuCampaignModel())
                 ->where('account_id',$account['account_id'])
                 ->get();
 
@@ -33,7 +33,7 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
             ];
         }
         $saveData = [];
-        $list = $this->sdk->multiGetAdGroupFeed($params);
+        $list = $this->sdk->multiGetCreativeFeed($params);
         foreach ($list as $item){
             // 计划不存在处理
             $this->handleCampaignFeedIdNotExists($item);
@@ -43,23 +43,19 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
                 : $item['req']['param']['header']['username'];
 
             $account = $this->getAccountByName($accountName);
-
-            foreach ($item['data']['body']['data'] as $adgroup){
+            foreach ($item['data']['body']['data'] as $creative){
                 $saveData[] = [
-                    'id'                => $adgroup['adgroupFeedId'],
+                    'id'                => $creative['creativeFeedId'],
                     'account_id'        => $account['account_id'],
-                    'campaign_feed_id'  => $adgroup['campaignFeedId'],
-                    'adgroup_feed_name' => $adgroup['adgroupFeedName'],
-                    'pause'             => $adgroup['pause'],
-                    'status'            => $adgroup['status'],
-                    'bid'               => $adgroup['bid'],
-                    'bidtype'           => $adgroup['bidtype'],
-                    'atp_feed_id'       => $adgroup['atpFeedId'],
-                    'ocpc_trans_from'   => $adgroup['ocpc']['transFrom'] ?? 0,
-                    'ocpc_bid'          => $adgroup['ocpc']['ocpcBid'] ?? 0,
-                    'ocpc_trans_type'   => $adgroup['ocpc']['transType'] ?? 0,
-                    'ocpc_pay_mode'     => $adgroup['ocpc']['payMode'] ?? 0,
-                    'extends'           => json_encode($adgroup),
+                    'adgroup_feed_id'   => $creative['adgroupFeedId'],
+                    'creative_feed_name'=> $creative['creativeFeedName'],
+                    'materialstyle'     => $creative['materialstyle'],
+                    'pause'             => $creative['pause'],
+                    'status'            => $creative['status'],
+                    'idea_type'         => $creative['ideaType'],
+                    'show_mt'           => $creative['showMt'] ?? 0,
+                    'addtime'           => date('Y-m-d H:i:s',strtotime($creative['addtime'])),
+                    'extends'           => json_encode($creative),
                     'remark_status'     => '',
                     'created_at'        => date('Y-m-d H:i:s'),
                     'updated_at'        => date('Y-m-d H:i:s'),
@@ -67,11 +63,6 @@ class BaiDuFeedAdgroupService extends BaiDuFeedService
             }
         }
         if(empty($saveData)) return;
-        $this->batchSave(BaiDuFeedAdgroupModel::class,$saveData);
+        $this->batchSave(BaiDuCreativeModel::class,$saveData);
     }
-
-
-
-
-
 }

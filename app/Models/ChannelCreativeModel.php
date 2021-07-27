@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class ChannelFeedCreativeModel extends BaseModel
+class ChannelCreativeModel extends BaseModel
 {
     /**
      * 关联到模型的数据表

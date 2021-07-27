@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Common\Console\Queue\QueueClickCommand;
 use App\Console\Commands\BaiDu\BaiDuSyncCommand;
 use App\Console\Commands\SyncChannelCreativeCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,7 +17,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         BaiDuSyncCommand::class,
-        SyncChannelCreativeCommand::class
+        SyncChannelCreativeCommand::class,
+
+        // 队列
+        QueueClickCommand::class,
     ];
 
     /**
@@ -27,6 +31,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // 队列
+        $schedule->command('queue:click')->cron('* * * * *');
 
         // 同步渠道-创意
         $schedule->command('sync_channel_creative --date=today')->cron('*/2 * * * *');

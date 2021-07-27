@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class BaiDuFeedAdgroupModel extends BaseModel
+class BaiDuAdgroupModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'baidu_feed_adgroups';
+    protected $table = 'baidu_adgroups';
 
 
     /**

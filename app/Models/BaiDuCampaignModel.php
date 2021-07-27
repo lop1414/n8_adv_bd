@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class BaiDuFeedCreativeModel extends BaseModel
+class BaiDuCampaignModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'baidu_feed_creatives';
+    protected $table = 'baidu_campaigns';
 
 
     /**
@@ -26,13 +26,13 @@ class BaiDuFeedCreativeModel extends BaseModel
 
     protected $fillable = [
         'account_id',
-        'adgroup_feed_id',
-        'creative_feed_name',
-        'materialstyle',
+        'campaign_feed_name',
+        'subject',
+        'budget',
         'pause',
         'status',
-        'idea_type',
-        'show_mt',
+        'starttime',
+        'endtime',
         'addtime',
         'extends',
         'remark_status'

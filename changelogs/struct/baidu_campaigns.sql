@@ -11,17 +11,17 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 26/07/2021 15:06:44
+ Date: 27/07/2021 16:18:50
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for baidu_feed_campaigns
+-- Table structure for baidu_campaigns
 -- ----------------------------
-DROP TABLE IF EXISTS `baidu_feed_campaigns`;
-CREATE TABLE `baidu_feed_campaigns` (
+DROP TABLE IF EXISTS `baidu_campaigns`;
+CREATE TABLE `baidu_campaigns` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '计划id',
   `account_id` bigint(11) NOT NULL COMMENT '账户id',
   `campaign_feed_name` varchar(255) NOT NULL DEFAULT '' COMMENT '计划名称',

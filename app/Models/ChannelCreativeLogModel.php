@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class ChannelFeedCreativeLogModel extends BaseModel
+class ChannelCreativeLogModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'channel_feed_creative_logs';
+    protected $table = 'channel_creative_logs';
 
 
 

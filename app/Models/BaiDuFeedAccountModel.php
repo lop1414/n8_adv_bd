@@ -11,7 +11,7 @@ class BaiDuFeedAccountModel extends BaseModel
      *
      * @var string
      */
-    protected $table = 'baidu_feed_accounts';
+    protected $table = 'baidu_accounts';
 
 
 

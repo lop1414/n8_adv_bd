@@ -4,10 +4,10 @@ namespace App\Console\Commands\BaiDu;
 
 use App\Common\Console\BaseCommand;
 use App\Common\Tools\CustomException;
-use App\Services\BaiDu\Feed\BaiDuFeedCreativeService;
-use App\Services\BaiDu\Feed\BaiDuFeedAccountService;
-use App\Services\BaiDu\Feed\BaiDuFeedAdgroupService;
-use App\Services\BaiDu\Feed\BaiDuFeedCampaignService;
+use App\Services\BaiDu\BaiDuCreativeService;
+use App\Services\BaiDu\BaiDuAccountService;
+use App\Services\BaiDu\BaiDuAdgroupService;
+use App\Services\BaiDu\BaiDuCampaignService;
 
 class BaiDuSyncCommand extends BaseCommand
 {
@@ -70,19 +70,19 @@ class BaiDuSyncCommand extends BaseCommand
         switch ($type){
             case 'account_feed':
                 echo "同步信息流账户\n";
-                $service = new BaiDuFeedAccountService();
+                $service = new BaiDuAccountService();
                 break;
-            case 'campaign_feed':
+            case 'campaign':
                 echo "同步信息流计划\n";
-                $service = new BaiDuFeedCampaignService();
+                $service = new BaiDuCampaignService();
                 break;
-            case 'adgroup_feed':
+            case 'adgroup':
                 echo "同步信息流推广单元\n";
-                $service = new BaiDuFeedAdgroupService();
+                $service = new BaiDuAdgroupService();
                 break;
-            case 'creative_feed':
+            case 'creative':
                 echo "同步信息流创意\n";
-                $service = new BaiDuFeedCreativeService();
+                $service = new BaiDuCreativeService();
                 break;
             default:
                 throw new CustomException([
