@@ -43,9 +43,12 @@ $router->group([
     'prefix' => 'front',
     'middleware' => ['api_sign_valid', 'access_control_allow_origin']
 ], function () use ($router) {
-    $router->group(['middleware' => ['access_control_allow_origin']], function () use ($router) {
-        // 点击
-        $router->get('front/click', 'Front\AdvClickController@index');
-    });
+
+});
+
+
+$router->group(['middleware' => ['access_control_allow_origin']], function () use ($router) {
+    // 点击
+    $router->get('front/click', 'Front\AdvClickController@index');
 });
 

@@ -43,17 +43,6 @@ class AdvClickService extends ClickService
         $data['muid'] = $muid;
 
 
-        $muidMd5 = '';
-        if(!empty($data['imei_md5'])){
-            $muidMd5 = trim($data['imei_md5']);
-        }elseif(!empty($data['idfa_md5'])){
-            $muidMd5 = trim($data['idfa_md5']);
-        }elseif(!empty($data['muid_md5'])){
-            $muidMd5 = trim($data['muid_md5']);
-        }
-        $data['muid_md5'] = $muidMd5;
-
-
         $clickAt = null;
         if(!empty($data['click_at'])){
             if(!is_numeric($data['click_at'])){
@@ -118,6 +107,14 @@ class AdvClickService extends ClickService
         }
 
         $data['click_at'] = $clickAt;
+
+        if(!empty($data['device_info'])){
+            $data['device_info'] = json_decode(base64_decode(urldecode($data['device_info'])),true);
+            $data['model'] = $data['device_info']['mobile_model'] ?? '';
+            $data['extends']['af_lang'] = $data['device_info']['af_lang'] ?? '';
+        }
+
+        $data['extends']['combid'] = $data['combid'] ?? '';
 
         return $data;
     }
