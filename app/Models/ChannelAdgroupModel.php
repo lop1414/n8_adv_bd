@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Common\Models\BaseModel;
 
-class ChannelCreativeModel extends BaseModel
+class ChannelAdgroupModel extends BaseModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'channel_feed_creatives';
+    protected $table = 'channel_adgroups';
 
 
     /**

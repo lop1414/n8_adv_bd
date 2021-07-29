@@ -5,22 +5,22 @@ namespace App\Console\Commands;
 use App\Common\Console\BaseCommand;
 use App\Common\Helpers\Functions;
 use App\Common\Tools\CustomException;
-use App\Services\ChannelFeedCreativeService;
+use App\Services\ChannelAdgroupService;
 
-class SyncChannelCreativeCommand extends BaseCommand
+class SyncChannelAdgroupCommand extends BaseCommand
 {
     /**
      * 命令行执行命令
      * @var string
      */
-    protected $signature = 'sync_channel_creative  {--date=}';
+    protected $signature = 'sync_channel_adgroup  {--date=}';
 
     /**
      * 命令描述
      *
      * @var string
      */
-    protected $description = '同步渠道创意关联';
+    protected $description = '同步渠道推广单元关联';
 
     /**
      * Create a new command instance.
@@ -38,7 +38,7 @@ class SyncChannelCreativeCommand extends BaseCommand
     public function handle(){
         $param = $this->option();
 
-        $lockKey = 'sync_channel_creative_'. $param['date'];
+        $lockKey = 'sync_channel_adgroup_'. $param['date'];
 
         $option = ['log' => true];
         $this->lockRun(
@@ -61,7 +61,7 @@ class SyncChannelCreativeCommand extends BaseCommand
         $dateRange = Functions::getDateRange($param['date']);
         $dateList = Functions::getDateListByRange($dateRange);
 
-        $channelCreativeService = new ChannelFeedCreativeService();
+        $channelCreativeService = new ChannelAdgroupService();
         foreach($dateList as $date){
             $channelCreativeService->sync([
                 'date' => $date,

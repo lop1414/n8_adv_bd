@@ -10,11 +10,11 @@ use App\Common\Services\BaseService;
 use App\Common\Services\SystemApi\UnionApiService;
 use App\Common\Tools\CustomException;
 use App\Models\BaiDuCreativeModel;
-use App\Models\ChannelCreativeLogModel;
-use App\Models\ChannelCreativeModel;
+use App\Models\ChannelAdgroupLogModel;
+use App\Models\ChannelAdgroupModel;
 use Illuminate\Support\Facades\DB;
 
-class ChannelFeedCreativeService extends BaseService
+class ChannelAdgroupService extends BaseService
 {
     /**
      * @param $data
@@ -25,7 +25,7 @@ class ChannelFeedCreativeService extends BaseService
     public function batchUpdate($data){
         $this->validRule($data, [
             'channel_id' => 'required|integer',
-            'creative_feed_ids' => 'required|array',
+            'adgroup_feed_ids' => 'required|array',
             'channel' => 'required',
             'platform' => 'required'
         ]);
@@ -35,9 +35,9 @@ class ChannelFeedCreativeService extends BaseService
         DB::beginTransaction();
 
         try{
-            foreach($data['creative_feed_ids'] as $creativeFeedId){
+            foreach($data['adgroup_feed_ids'] as $adgroupFeedId){
                 $this->update([
-                    'creative_feed_id' => $creativeFeedId,
+                    'adgroup_feed_id' => $adgroupFeedId,
                     'channel_id' => $data['channel_id'],
                     'platform' => $data['platform'],
                     'extends' => [
@@ -64,25 +64,25 @@ class ChannelFeedCreativeService extends BaseService
      * 更新
      */
     public function update($data){
-        $channelCreativeModel = new ChannelCreativeModel();
-        $channelCreative = $channelCreativeModel->where('feed_creative_id', $data['feed_creative_id'])
+        $channelAdgroupModel = new ChannelAdgroupModel();
+        $channelAdgroup = $channelAdgroupModel->where('adgroup_feed_id', $data['adgroup_feed_id'])
             ->where('platform', $data['platform'])
             ->first();
 
-        $flag = $this->buildFlag($channelCreative);
-        if(empty($channelCreative)){
-            $channelCreative = new ChannelCreativeModel();
+        $flag = $this->buildFlag($channelAdgroup);
+        if(empty($channelAdgroup)){
+            $channelAdgroup = new ChannelAdgroupModel();
         }
 
-        $channelCreative->feed_creative_id = $data['feed_creative_id'];
-        $channelCreative->channel_id = $data['channel_id'];
-        $channelCreative->platform = $data['platform'];
-        $channelCreative->extends = $data['extends'];
-        $ret = $channelCreative->save();
-        if($ret && !empty($channelCreative->feed_creative_id) && $flag != $this->buildFlag($channelCreative)){
+        $channelAdgroup->adgroup_feed_id = $data['adgroup_feed_id'];
+        $channelAdgroup->channel_id = $data['channel_id'];
+        $channelAdgroup->platform = $data['platform'];
+        $channelAdgroup->extends = $data['extends'];
+        $ret = $channelAdgroup->save();
+        if($ret && !empty($channelAdgroup->adgroup_feed_id) && $flag != $this->buildFlag($channelAdgroup)){
             $this->createChannelAdLog([
-                'channel_creative_id' => $channelCreative->id,
-                'feed_creative_id' => $data['feed_creative_id'],
+                'channel_adgroup_feed_id' => $channelAdgroup->id,
+                'adgroup_feed_id' => $data['adgroup_feed_id'],
                 'channel_id' => $data['channel_id'],
                 'platform'   => $data['platform'],
                 'extends'    => $data['extends']
@@ -93,19 +93,19 @@ class ChannelFeedCreativeService extends BaseService
     }
 
     /**
-     * @param $channelCreative
+     * @param $channelAdgroup
      * @return string
      * 构建标识
      */
-    protected function buildFlag($channelCreative){
-        $adminId = !empty($channelCreative->extends->channel->admin_id) ? $channelCreative->extends->channel->admin_id : 0;
-        if(empty($channelCreative)){
+    protected function buildFlag($channelAdgroup){
+        $adminId = !empty($channelAdgroup->extends->channel->admin_id) ? $channelAdgroup->extends->channel->admin_id : 0;
+        if(empty($channelAdgroup)){
             $flag = '';
         }else{
             $flag = implode("_", [
-                $channelCreative->feed_creative_id,
-                $channelCreative->channel_id,
-                $channelCreative->platform,
+                $channelAdgroup->adgroup_feed_id,
+                $channelAdgroup->channel_id,
+                $channelAdgroup->platform,
                 $adminId
             ]);
         }
@@ -118,9 +118,9 @@ class ChannelFeedCreativeService extends BaseService
      * 创建渠道-计划日志
      */
     protected function createChannelAdLog($data){
-        $channelFeedCreativeLogModel = new ChannelCreativeLogModel();
-        $channelFeedCreativeLogModel->channel_feed_creative_id = $data['channel_feed_creative_id'];
-        $channelFeedCreativeLogModel->feed_creative_id = $data['feed_creative_id'];
+        $channelFeedCreativeLogModel = new ChannelAdgroupLogModel();
+        $channelFeedCreativeLogModel->channel_adgroup_feed_id = $data['channel_adgroup_feed_id'];
+        $channelFeedCreativeLogModel->adgroup_feed_id = $data['adgroup_feed_id'];
         $channelFeedCreativeLogModel->channel_id = $data['channel_id'];
         $channelFeedCreativeLogModel->platform = $data['platform'];
         $channelFeedCreativeLogModel->extends = $data['extends'];
@@ -263,7 +263,7 @@ class ChannelFeedCreativeService extends BaseService
                     unset($channel['channel_extends']);
 
                     $this->update([
-                        'feed_creative_id' => $baiDuFeedCreative->id,
+                        'adgroup_feed_id' => $baiDuFeedCreative->adgroup_feed_id,
                         'channel_id' => $param['android_channel_id'],
                         'platform' => PlatformEnum::DEFAULT,
                         'extends' => [

@@ -4,7 +4,7 @@ namespace App\Console;
 
 use App\Common\Console\Queue\QueueClickCommand;
 use App\Console\Commands\BaiDu\BaiDuSyncCommand;
-use App\Console\Commands\SyncChannelCreativeCommand;
+use App\Console\Commands\SyncChannelAdgroupCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         BaiDuSyncCommand::class,
-        SyncChannelCreativeCommand::class,
+        SyncChannelAdgroupCommand::class,
 
         // 队列
         QueueClickCommand::class,
