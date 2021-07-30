@@ -46,20 +46,21 @@ class AdvConvertCallbackService extends ConvertCallbackService
         $eventType = $eventTypeMap[$item->convert_type];
 
 
-        $this->runCallback($item->click, $eventType);
+        $this->runCallback($item, $eventType);
 
         return true;
     }
 
     /**
-     * @param $click
+     * @param $item
      * @param $eventType
      * @return bool
      * @throws CustomException
      * 执行回传
      */
-    public function runCallback($click, $eventType){
+    public function runCallback($item, $eventType){
 
+        $click = $item->click;
         // 付费金额
         $payAmount = 0;
 //        if(!empty($item->extends->amount)){
@@ -130,8 +131,8 @@ class AdvConvertCallbackService extends ConvertCallbackService
                 $conversionType
             ]
         ];
-        $result = $this->curlPost('https://ocpc.baidu.com/ocpcapi/api/uploadConvertData',$param);
 
+        $result = $this->curlPost('https://ocpc.baidu.com/ocpcapi/api/uploadConvertData',$param);
         if(empty($result) || !isset($result['header']['status']) || $result['header']['status'] != 0){
             throw new CustomException([
                 'code' => 'CONVERT_CALLBACK_ERROR',
@@ -201,9 +202,9 @@ class AdvConvertCallbackService extends ConvertCallbackService
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , false);
         }
 
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_POST, true);
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
 
         $output = curl_exec($ch);
 

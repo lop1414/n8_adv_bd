@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Common\Console\ConvertCallbackCommand;
 use App\Common\Console\Queue\QueueClickCommand;
 use App\Console\Commands\BaiDu\BaiDuSyncCommand;
 use App\Console\Commands\SyncChannelAdgroupCommand;
@@ -21,6 +22,9 @@ class Kernel extends ConsoleKernel
 
         // 队列
         QueueClickCommand::class,
+
+        // 转化回传
+        ConvertCallbackCommand::class,
     ];
 
     /**
@@ -36,5 +40,9 @@ class Kernel extends ConsoleKernel
 
         // 同步渠道-推广单元
         $schedule->command('sync_channel_adgroup --date=today')->cron('*/2 * * * *');
+
+
+        // 转化上报
+        $schedule->command('convert_callback')->cron('* * * * *');
     }
 }
