@@ -48,4 +48,12 @@ class BaiDuAccountModel extends BaseModel
         $this->attributes['extends'] = json_encode($value);
     }
 
+
+    /**
+     * 产品
+     */
+    public function manageAccount(){
+        return $this->hasOne('App\Models\BaiDuAccountModel', 'id', 'parent_id');
+    }
+
 }

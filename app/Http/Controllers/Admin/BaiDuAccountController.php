@@ -45,6 +45,7 @@ class BaiDuAccountController extends BaseController
             $map = $this->getAdminUserMap();
             foreach ($this->curdService->responseData['list'] as $item){
                 $item->admin_name = $item->admin_id ? $map[$item->admin_id]['name'] : '';
+                $item->manageAccount;
             }
         });
     }
@@ -61,6 +62,7 @@ class BaiDuAccountController extends BaseController
             $map = $this->getAdminUserMap();
             foreach ($this->curdService->responseData as $item){
                 $item->admin_name = $item->admin_id ? $map[$item->admin_id]['name'] : '';
+                $item->manageAccount;
             }
         });
     }
@@ -76,6 +78,7 @@ class BaiDuAccountController extends BaseController
                 'id'  => $adminId
             ]);
             $this->curdService->responseData->admin_name = $map[$adminId]['name'];
+            $this->curdService->responseData->manageAccount;
         });
     }
 
