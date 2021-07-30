@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Common\Controllers\Front\FrontController;
 use App\Services\ChannelAdgroupService;
-use App\Services\ChannelAdService;
 use Illuminate\Http\Request;
 
 class ChannelAdgroupController extends FrontController
