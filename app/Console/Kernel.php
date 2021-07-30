@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         // 队列
         $schedule->command('queue:click')->cron('* * * * *');
 
-        // 同步渠道-创意
-        $schedule->command('sync_channel_creative --date=today')->cron('*/2 * * * *');
+        // 同步渠道-推广单元
+        $schedule->command('sync_channel_adgroup --date=today')->cron('*/2 * * * *');
     }
 }

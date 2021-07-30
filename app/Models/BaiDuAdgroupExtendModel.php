@@ -19,7 +19,7 @@ class BaiDuAdgroupExtendModel extends BaseModel
      *
      * @var string
      */
-    protected $primaryKey = 'adgroup_id';
+    protected $primaryKey = 'adgroup_feed_id';
 
     /**
      * @var string

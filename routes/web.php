@@ -43,7 +43,21 @@ $router->group([
     'prefix' => 'front',
     'middleware' => ['api_sign_valid', 'access_control_allow_origin']
 ], function () use ($router) {
+    // 转化
+    $router->group(['prefix' => 'convert'], function () use ($router) {
+        $router->post('match', '\\App\Common\Controllers\Front\ConvertController@match');
+    });
 
+    // 转化回传
+    $router->group(['prefix' => 'convert_callback'], function () use ($router) {
+        $router->post('get', '\\App\Common\Controllers\Front\ConvertCallbackController@get');
+    });
+
+    // 渠道-推广单元
+    $router->group(['prefix' => 'channel_adgroup'], function () use ($router) {
+        $router->post('select', 'Front\ChannelAdgroupController@select');
+        $router->post('batch_update', 'Front\ChannelAdgroupController@batchUpdate');
+    });
 });
 
 
@@ -51,4 +65,9 @@ $router->group(['middleware' => ['access_control_allow_origin']], function () us
     // 点击
     $router->get('front/click', 'Front\AdvClickController@index');
 });
+
+
+
+// 测试
+$router->post('front/baidu/test', 'Front\BaiDu\IndexController@test');
 

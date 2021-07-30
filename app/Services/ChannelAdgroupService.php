@@ -9,6 +9,8 @@ use App\Common\Helpers\Functions;
 use App\Common\Services\BaseService;
 use App\Common\Services\SystemApi\UnionApiService;
 use App\Common\Tools\CustomException;
+use App\Models\BaiDuAccountModel;
+use App\Models\BaiDuAdgroupModel;
 use App\Models\BaiDuCreativeModel;
 use App\Models\ChannelAdgroupLogModel;
 use App\Models\ChannelAdgroupModel;
@@ -127,93 +129,93 @@ class ChannelAdgroupService extends BaseService
         return $channelFeedCreativeLogModel->save();
     }
 
-//    /**
-//     * @param $param
-//     * @return array
-//     * @throws CustomException
-//     * 列表
-//     */
-//    public function select($param){
-//        $this->validRule($param, [
-//            'start_datetime' => 'required',
-//            'end_datetime' => 'required',
-//        ]);
-//        Functions::timeCheck($param['start_datetime']);
-//        Functions::timeCheck($param['end_datetime']);
-//        $channelAdModel = new ChannelAdModel();
-//        $channelAds = $channelAdModel->whereBetween('updated_at', [$param['start_datetime'], $param['end_datetime']])->get();
-//
-//        $distinct = $data = [];
-//        foreach($channelAds as $channelAd){
-//            if(empty($distinct[$channelAd['channel_id']])){
-//                // 计划
-//                $oceanAd = OceanAdModel::find($channelAd['ad_id']);
-//                if(empty($oceanAd)){
-//                    continue;
-//                }
-//
-//                // 账户
-//                $oceanAccount = (new OceanAccountModel())->where('account_id', $oceanAd['account_id'])->first();
-//                if(empty($oceanAccount)){
-//                    continue;
-//                }
-//
-//                $data[] = [
-//                    'channel_id' => $channelAd['channel_id'],
-//                    'ad_id' => $channelAd['ad_id'],
-//                    'ad_name' => $oceanAd['name'],
-//                    'account_id' => $oceanAd['account_id'],
-//                    'account_name' => $oceanAccount['name'],
-//                    'admin_id' => $oceanAccount['admin_id'],
-//                ];
-//                $distinct[$channelAd['channel_id']] = 1;
-//            }
-//        }
-//
-//        return $data;
-//    }
-//
-//    /**
-//     * @param $data
-//     * @return array
-//     * @throws CustomException
-//     * 详情
-//     */
-//    public function read($data){
-//        $this->validRule($data, [
-//            'channel_id' => 'required|integer'
-//        ]);
-//
-//        $channelAdModel = new ChannelAdModel();
-//        $adIds = $channelAdModel->where('channel_id', $data['channel_id'])->pluck('ad_id')->toArray();
-//
-//        $builder = new OceanAdModel();
-//        $builder = $builder->whereIn('id', $adIds);
-//
-//        // 过滤
-//        if(!empty($data['filtering'])){
-//            $builder = $builder->filtering($data['filtering']);
-//        }
-//
-//        $ads = $builder->get();
-//
-//        foreach($ads as $k => $v){
-//            unset($ads[$k]['extends']);
-//        }
-//
-//        foreach($ads as $ad){
-//            if(!empty($ad->ocean_ad_extends)){
-//                $ad->convert_callback_strategy = ConvertCallbackStrategyModel::find($ad->ocean_ad_extends->convert_callback_strategy_id);
-//            }else{
-//                $ad->convert_callback_strategy = null;
-//            }
-//        }
-//
-//        return [
-//            'channel_id' => $data['channel_id'],
-//            'list' => $ads
-//        ];
-//    }
+    /**
+     * @param $param
+     * @return array
+     * @throws CustomException
+     * 列表
+     */
+    public function select($param){
+        $this->validRule($param, [
+            'start_datetime' => 'required',
+            'end_datetime' => 'required',
+        ]);
+        Functions::timeCheck($param['start_datetime']);
+        Functions::timeCheck($param['end_datetime']);
+        $channelAdgroupModel = new ChannelAdgroupModel();
+        $channelAdgroups = $channelAdgroupModel->whereBetween('updated_at', [$param['start_datetime'], $param['end_datetime']])->get();
+
+        $distinct = $data = [];
+        foreach($channelAdgroups as $channelAdgroup){
+            if(empty($distinct[$channelAdgroup['channel_id']])){
+                // 推广单元
+                $baiduAdgroup = BaiDuAdgroupModel::find($channelAdgroup['adgroup_feed_id']);
+                if(empty($baiduAdgroup)){
+                    continue;
+                }
+
+                // 账户
+                $baiduAccount = (new BaiDuAccountModel())->where('account_id', $baiduAdgroup['account_id'])->first();
+                if(empty($baiduAccount)){
+                    continue;
+                }
+
+                $data[] = [
+                    'channel_id' => $channelAdgroup['channel_id'],
+                    'ad_id' => $channelAdgroup['ad_id'],
+                    'ad_name' => $baiduAdgroup['name'],
+                    'account_id' => $baiduAdgroup['account_id'],
+                    'account_name' => $baiduAccount['name'],
+                    'admin_id' => $baiduAccount['admin_id'],
+                ];
+                $distinct[$channelAdgroup['channel_id']] = 1;
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws CustomException
+     * 详情
+     */
+    public function read($data){
+        $this->validRule($data, [
+            'channel_id' => 'required|integer'
+        ]);
+
+        $channelAdModel = new ChannelAdModel();
+        $adIds = $channelAdModel->where('channel_id', $data['channel_id'])->pluck('ad_id')->toArray();
+
+        $builder = new OceanAdModel();
+        $builder = $builder->whereIn('id', $adIds);
+
+        // 过滤
+        if(!empty($data['filtering'])){
+            $builder = $builder->filtering($data['filtering']);
+        }
+
+        $ads = $builder->get();
+
+        foreach($ads as $k => $v){
+            unset($ads[$k]['extends']);
+        }
+
+        foreach($ads as $ad){
+            if(!empty($ad->ocean_ad_extends)){
+                $ad->convert_callback_strategy = ConvertCallbackStrategyModel::find($ad->ocean_ad_extends->convert_callback_strategy_id);
+            }else{
+                $ad->convert_callback_strategy = null;
+            }
+        }
+
+        return [
+            'channel_id' => $data['channel_id'],
+            'list' => $ads
+        ];
+    }
 
 
     /**
