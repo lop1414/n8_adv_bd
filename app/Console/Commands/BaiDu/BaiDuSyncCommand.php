@@ -58,7 +58,7 @@ class BaiDuSyncCommand extends BaseCommand
         $this->lockRun(
             [$service, 'sync'],
             'baidu|sync|'.$param['type'],
-            3600,
+            3600 * 3,
             $option,
             $param
         );
