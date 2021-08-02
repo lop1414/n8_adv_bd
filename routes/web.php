@@ -65,9 +65,9 @@ $router->group([
     $router->group(['prefix' => 'sub_task'], function () use ($router) {
 
         // 百度同步
-        $router->group(['prefix' => 'ocean_sync'], function () use ($router) {
-            $router->post('select', 'Admin\SubTask\TaskOceanSyncController@select');
-            $router->post('read', 'Admin\SubTask\TaskOceanSyncController@read');
+        $router->group(['prefix' => 'baidu_sync'], function () use ($router) {
+            $router->post('select', 'Admin\SubTask\TaskBaiDuSyncController@select');
+            $router->post('read', 'Admin\SubTask\TaskBaiDuSyncController@read');
         });
     });
 });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\SubTask;
 use App\Common\Controllers\Admin\SubTaskController;
 use App\Sdks\BaiDu\BaiDu;
 
-class SubTaskOceanController extends SubTaskController
+class SubTaskBaiDuController extends SubTaskController
 {
     /**
      * constructor.
