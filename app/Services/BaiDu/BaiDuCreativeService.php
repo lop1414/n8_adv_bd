@@ -2,8 +2,8 @@
 
 namespace App\Services\BaiDu;
 
-use App\Models\BaiDuCampaignModel;
-use App\Models\BaiDuCreativeModel;
+use App\Models\BaiDu\BaiDuCampaignModel;
+use App\Models\BaiDu\BaiDuCreativeModel;
 
 
 class BaiDuCreativeService extends BaiDuService

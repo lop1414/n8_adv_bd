@@ -8,7 +8,7 @@ use App\Common\Enums\ConvertTypeEnum;
 use App\Common\Models\ClickModel;
 use App\Common\Models\ConvertCallbackModel;
 use App\Common\Services\ConvertMatchService;
-use App\Models\BaiDuAdgroupExtendModel;
+use App\Models\BaiDu\BaiDuAdgroupExtendModel;
 
 class AdvConvertMatchService extends ConvertMatchService
 {

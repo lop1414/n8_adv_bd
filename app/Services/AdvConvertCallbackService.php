@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Common\Enums\ConvertTypeEnum;
 use App\Common\Tools\CustomException;
 use App\Common\Services\ConvertCallbackService;
-use App\Models\BaiDuAccountModel;
-use App\Models\BaiDuAdgroupModel;
+use App\Models\BaiDu\BaiDuAccountModel;
+use App\Models\BaiDu\BaiDuAdgroupModel;
 
 class AdvConvertCallbackService extends ConvertCallbackService
 {

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\BaiDu;
 
-use App\Common\Models\BaseModel;
 
-class BaiDuCreativeModel extends BaseModel
+class BaiDuCreativeModel extends BaiDuModel
 {
     /**
      * 关联到模型的数据表

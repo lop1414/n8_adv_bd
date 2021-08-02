@@ -1,14 +1,14 @@
 <?php
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\BaiDu;
 
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Tools\CustomException;
-use App\Models\BaiDuAccountModel;
+use App\Models\BaiDu\BaiDuAccountModel;
 use App\Services\BaiDu\BaiDuAccountService;
 use Illuminate\Http\Request;
 
-class BaiDuAccountController extends BaseController
+class BaiDuAccountController extends BaiDuController
 {
 
     /**
@@ -22,25 +22,12 @@ class BaiDuAccountController extends BaseController
     }
 
 
-    /**
-     * 过滤
-     */
-    public function dataFilter(){
-        $this->curdService->customBuilder(function ($builder){
-            if(!$this->isDataAuth()){
-                $builder->where('admin_id',$this->adminUser['admin_user']['id']);
-            }
-        });
-    }
 
 
     /**
      * 分页列表预处理
      */
     public function selectPrepare(){
-        $this->curdService->selectQueryBefore(function(){
-            $this->dataFilter();
-        });
         $this->curdService->selectQueryAfter(function(){
             $map = $this->getAdminUserMap();
             foreach ($this->curdService->responseData['list'] as $item){
@@ -55,9 +42,6 @@ class BaiDuAccountController extends BaseController
      * 列表预处理
      */
     public function getPrepare(){
-        $this->curdService->getQueryBefore(function (){
-            $this->dataFilter();
-        });
         $this->curdService->getQueryAfter(function(){
             $map = $this->getAdminUserMap();
             foreach ($this->curdService->responseData as $item){
@@ -144,7 +128,7 @@ class BaiDuAccountController extends BaseController
     }
 
 
-    public function sync(Request $request){
+    public function syncAccount(Request $request){
         $requestData = $request->all();
 
         $this->curdService->setRequestData($requestData);

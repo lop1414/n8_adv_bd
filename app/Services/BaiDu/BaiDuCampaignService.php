@@ -2,7 +2,7 @@
 
 namespace App\Services\BaiDu;
 
-use App\Models\BaiDuCampaignModel;
+use App\Models\BaiDu\BaiDuCampaignModel;
 
 
 class BaiDuCampaignService extends BaiDuService

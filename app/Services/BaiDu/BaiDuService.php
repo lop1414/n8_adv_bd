@@ -6,10 +6,10 @@ use App\Common\Enums\StatusEnum;
 use App\Common\Helpers\Functions;
 use App\Common\Services\BaseService;
 use App\Enums\RemarkStatusEnum;
-use App\Models\BaiDuAccountModel;
-use App\Models\BaiDuAdgroupModel;
-use App\Models\BaiDuCampaignModel;
-use App\Models\BaiDuCreativeModel;
+use App\Models\BaiDu\BaiDuAccountModel;
+use App\Models\BaiDu\BaiDuAdgroupModel;
+use App\Models\BaiDu\BaiDuCampaignModel;
+use App\Models\BaiDu\BaiDuCreativeModel;
 use App\Sdks\BaiDu\BaiDu;
 
 

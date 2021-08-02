@@ -21,19 +21,54 @@ $router->group([
     'prefix' => 'admin',
     'middleware' => ['center_menu_auth', 'admin_request_log', 'access_control_allow_origin']
 ], function () use ($router) {
+
     // 账户
     $router->group(['prefix' => 'baidu_account'], function () use ($router) {
-        $router->post('create', 'Admin\BaiDuAccountController@create');
-        $router->post('update', 'Admin\BaiDuAccountController@update');
-        $router->post('select', 'Admin\BaiDuAccountController@select');
-        $router->post('get', 'Admin\BaiDuAccountController@get');
-        $router->post('read', 'Admin\BaiDuAccountController@read');
-        $router->post('enable', 'Admin\BaiDuAccountController@enable');
-        $router->post('disable', 'Admin\BaiDuAccountController@disable');
-        $router->post('delete', 'Admin\BaiDuAccountController@delete');
-        $router->post('batch_enable', 'Admin\BaiDuAccountController@batchEnable');
-        $router->post('batch_disable', 'Admin\BaiDuAccountController@batchDisable');
-        $router->post('sync', 'Admin\BaiDuAccountController@sync');
+        $router->post('create', 'Admin\BaiDu\BaiDuAccountController@create');
+        $router->post('update', 'Admin\BaiDu\BaiDuAccountController@update');
+        $router->post('select', 'Admin\BaiDu\BaiDuAccountController@select');
+        $router->post('get', 'Admin\BaiDu\BaiDuAccountController@get');
+        $router->post('read', 'Admin\BaiDu\BaiDuAccountController@read');
+        $router->post('enable', 'Admin\BaiDu\BaiDuAccountController@enable');
+        $router->post('disable', 'Admin\BaiDu\BaiDuAccountController@disable');
+        $router->post('delete', 'Admin\BaiDu\BaiDuAccountController@delete');
+        $router->post('batch_enable', 'Admin\BaiDu\BaiDuAccountController@batchEnable');
+        $router->post('batch_disable', 'Admin\BaiDu\BaiDuAccountController@batchDisable');
+        $router->post('sync', 'Admin\BaiDu\BaiDuAccountController@syncAccount');
+    });
+
+    //百度
+    $router->group(['prefix' => 'baidu'], function () use ($router) {
+        // 推广计划
+        $router->group(['prefix' => 'campaign'], function () use ($router) {
+            $router->post('select', 'Admin\BaiDu\BaiDuCampaignController@select');
+            $router->post('get', 'Admin\BaiDu\BaiDuCampaignController@get');
+            $router->post('read', 'Admin\BaiDu\BaiDuCampaignController@read');
+        });
+        // 推广单元
+        $router->group(['prefix' => 'adgroup'], function () use ($router) {
+            $router->post('select', 'Admin\BaiDu\BaiDuAdgroupController@select');
+            $router->post('get', 'Admin\BaiDu\BaiDuAdgroupController@get');
+            $router->post('read', 'Admin\BaiDu\BaiDuAdgroupController@read');
+        });
+    });
+
+
+    // 任务
+    $router->group(['prefix' => 'task'], function () use ($router) {
+        $router->post('select', '\\App\Common\Controllers\Admin\TaskController@select');
+        $router->post('open', '\\App\Common\Controllers\Admin\TaskController@open');
+        $router->post('close', '\\App\Common\Controllers\Admin\TaskController@close');
+    });
+
+    // 子任务
+    $router->group(['prefix' => 'sub_task'], function () use ($router) {
+
+        // 百度同步
+        $router->group(['prefix' => 'ocean_sync'], function () use ($router) {
+            $router->post('select', 'Admin\SubTask\TaskOceanSyncController@select');
+            $router->post('read', 'Admin\SubTask\TaskOceanSyncController@read');
+        });
     });
 });
 

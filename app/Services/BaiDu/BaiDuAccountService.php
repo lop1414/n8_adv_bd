@@ -3,8 +3,8 @@
 namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
-use App\Models\BaiDuAccountModel;
-use App\Models\BaiDuFeedAccountModel;
+use App\Models\BaiDu\BaiDuAccountModel;
+use App\Models\BaiDu\BaiDuFeedAccountModel;
 
 
 class BaiDuAccountService extends BaiDuService
@@ -50,7 +50,7 @@ class BaiDuAccountService extends BaiDuService
 
             foreach ($item['data']['body']['data'] as $data){
                 $saveData[] = [
-                    'id'             => $data['userId'],
+                    'account_id'     => $data['userId'],
                     'balance'        => $data['balance'],
                     'budget'         => $data['budget'],
                     'balance_package'=> $data['balancePackage'],

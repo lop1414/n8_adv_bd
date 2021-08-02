@@ -2,8 +2,8 @@
 
 namespace App\Services\BaiDu;
 
-use App\Models\BaiDuAdgroupModel;
-use App\Models\BaiDuCampaignModel;
+use App\Models\BaiDu\BaiDuAdgroupModel;
+use App\Models\BaiDu\BaiDuCampaignModel;
 
 
 class BaiDuAdgroupService extends BaiDuService

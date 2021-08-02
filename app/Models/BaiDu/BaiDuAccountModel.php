@@ -1,41 +1,32 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\BaiDu;
 
-use App\Common\Models\BaseModel;
 
-class BaiDuCampaignModel extends BaseModel
+class BaiDuAccountModel extends BaiDuModel
 {
     /**
      * 关联到模型的数据表
      *
      * @var string
      */
-    protected $table = 'baidu_campaigns';
+    protected $table = 'baidu_accounts';
 
 
-    /**
-     * @var array
-     * 批量更新忽略字段
-     */
-    protected $updateIgnoreFields = [
-        'created_at'
-    ];
 
 
 
     protected $fillable = [
         'account_id',
-        'campaign_feed_name',
-        'subject',
-        'budget',
-        'pause',
+        'name',
+        'token',
+        'ocpc_token',
+        'rebate',
+        'password',
+        'parent_id',
         'status',
-        'starttime',
-        'endtime',
-        'addtime',
+        'admin_id',
         'extends',
-        'remark_status'
     ];
 
 
@@ -54,6 +45,14 @@ class BaiDuCampaignModel extends BaseModel
      */
     public function setExtendsAttribute($value){
         $this->attributes['extends'] = json_encode($value);
+    }
+
+
+    /**
+     * 产品
+     */
+    public function manageAccount(){
+        return $this->hasOne('App\Models\BaiDu\BaiDuAccountModel', 'id', 'parent_id');
     }
 
 }

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\BaiDu;
 
-use App\Common\Models\BaseModel;
 
-class BaiDuFeedAccountModel extends BaseModel
+class BaiDuFeedAccountModel extends BaiDuModel
 {
     /**
      * 关联到模型的数据表
@@ -13,6 +12,22 @@ class BaiDuFeedAccountModel extends BaseModel
      */
     protected $table = 'baidu_feed_accounts';
 
+
+
+    /**
+     * 关联到模型数据表的主键
+     *
+     * @var string
+     */
+    protected $primaryKey = 'account_id';
+
+
+
+    /**
+     * @var bool
+     * 是否自增
+     */
+    public $incrementing = false;
 
 
     /**

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\BaiDu;
 
-use App\Common\Models\BaseModel;
 
-class BaiDuAdgroupModel extends BaseModel
+class BaiDuAdgroupModel extends BaiDuModel
 {
     /**
      * 关联到模型的数据表
