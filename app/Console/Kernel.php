@@ -48,10 +48,10 @@ class Kernel extends ConsoleKernel
         // 百度同步
 
         // 推广计划
-        $schedule->command(' artisan baidu:sync --type=campaign')->cron('*/15 * * * *');
+        $schedule->command('artisan baidu:sync --type=campaign')->cron('*/15 * * * *');
         // 推广单元
-        $schedule->command(' artisan baidu:sync --type=adgroup')->cron('*/15 * * * *');
+        $schedule->command('artisan baidu:sync --type=adgroup')->cron('*/15 * * * *');
         // 创意
-        $schedule->command(' artisan baidu:sync --type=creative')->cron('*/15 * * * *');
+        $schedule->command('artisan baidu:sync --type=creative')->cron('*/15 * * * *');
     }
 }
