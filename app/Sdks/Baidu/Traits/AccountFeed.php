@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Sdks\BaiDu\Feed\Traits;
+namespace App\Sdks\BaiDu\Traits;
 
 
 trait AccountFeed

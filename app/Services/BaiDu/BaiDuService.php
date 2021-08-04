@@ -3,8 +3,8 @@
 namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
-use App\Common\Helpers\Functions;
 use App\Common\Services\BaseService;
+use App\Enums\BaiDu\BaiDuAdgroupStatusEnum;
 use App\Enums\RemarkStatusEnum;
 use App\Models\BaiDu\BaiDuAccountModel;
 use App\Models\BaiDu\BaiDuAdgroupModel;
@@ -85,16 +85,22 @@ class BaiDuService extends BaseService
 
 
 
+
     /**
      * @param $modelClass
      * @param $data
      * @param int $number
+     * @param bool $isIncludePrimaryKey 是否包含主键
      * @return bool
      * 批量保存
      */
-    public function batchSave($modelClass,$data,$number = 20){
+    public function batchSave($modelClass,$data,$number = 20,$isIncludePrimaryKey = true){
         $model = new $modelClass();
-        $model->chunkInsertOrUpdate($data, $number, $model->getTable(), $model->getTableColumnsWithPrimaryKey());
+        if($isIncludePrimaryKey){
+            $model->chunkInsertOrUpdate($data, $number, $model->getTable(), $model->getTableColumnsWithPrimaryKey());
+        }else{
+            $model->chunkInsertOrUpdate($data, $number, $model->getTable());
+        }
         return true;
     }
 
@@ -108,58 +114,27 @@ class BaiDuService extends BaseService
             $accountIds = $option['account_ids'];
         }
 
-        // 状态
-        if(!empty($option['status'])){
-            $status = strtoupper($option['status']);
-            Functions::hasEnum(StatusEnum::class, $status);
-        }else{
-            $status = StatusEnum::ENABLE;
+        $accountList = $this->getSubAccountGroup($accountIds);
+
+        foreach ($accountList as $groups){
+            $this->setSdk($groups['name'],$groups['password'],$groups['token']);
+
+            // 并发分片大小
+            if(!empty($option['multi_chunk_size'])){
+                $multiChunkSize = min(intval($option['multi_chunk_size']), 8);
+                $this->sdk->setMultiChunkSize($multiChunkSize);
+            }
+
+            $this->syncItem($groups['list']);
+
         }
-
-
-        $parentAccountList = (new BaiDuAccountModel())->where('parent_id',0)->get();
-
-        $list = [];
-
-        if(!$parentAccountList->isEmpty()){
-            $list = $parentAccountList->toArray();
-        }
-
-        foreach ($list as $parentAccount){
-
-            $query = (new BaiDuAccountModel())
-                ->where('parent_id',$parentAccount['id'])
-                ->where('status',$status)
-                ->when($accountIds && !in_array($parentAccount['account_id'],$accountIds),function ($query) use ($accountIds){
-                    return $query->whereIn('account_id',$accountIds);
-                })
-                ->orderBy('account_id');
-
-            $page = 1;
-            do{
-                // 并发最多20个账户
-                $subAccountList = (new BaiDuAccountModel())->scopeListPage($query,$page, 20);
-
-                $this->setSdk($parentAccount['name'],$parentAccount['password'],$parentAccount['token']);
-
-                // 并发分片大小
-                if(!empty($option['multi_chunk_size'])){
-                    $multiChunkSize = min(intval($option['multi_chunk_size']), 8);
-                    $this->sdk->setMultiChunkSize($multiChunkSize);
-                }
-
-                $this->syncItem($subAccountList['list']);
-                $page += 1;
-            }while($subAccountList['page_info']['page'] < $subAccountList['page_info']['total_page']);
-        }
-
 
 
     }
 
 
 
-    public function syncItem($accountNames){}
+    public function syncItem($subAccount){}
 
 
 
@@ -200,4 +175,126 @@ class BaiDuService extends BaseService
             }
         }
     }
+
+
+
+
+    /**
+     * @return mixed
+     * 获取在跑账户id
+     */
+    public function getRunningAccountIds(){
+        // 在跑状态
+        $runningStatus = [
+            BaiDuAdgroupStatusEnum::ADGROUP_STATUS_OK,
+        ];
+        $runningStatusStr = implode("','", $runningStatus);
+
+        $baiduAccountModel = new BaiDuAccountModel();
+        $baiduAccountIds = $baiduAccountModel->whereRaw("
+            account_id IN (
+                SELECT account_id FROM baidu_adgroups
+                    WHERE `status` IN ('{$runningStatusStr}')
+                    GROUP BY account_id
+            )
+        ")->pluck('account_id');
+
+        return $baiduAccountIds->toArray();
+    }
+
+
+    /**
+     * @param array $accountIds
+     * @return array
+     * 获取子账号组
+     */
+    public function getSubAccountGroup(array $accountIds = []){
+        $subAccount = $this->getSubAccount($accountIds);
+
+        $s = [];
+        foreach($subAccount as $account){
+            $s[$account->parent_id][] = $account;
+        }
+
+
+        $group = [];
+        foreach($s as $accountId => $ss){
+            $group[$accountId] = (new BaiDuAccountModel())
+                ->where('account_id',$accountId)
+                ->first()
+                ->toArray();
+
+            $group[$accountId]['list'] = $ss;
+        }
+
+        return $group;
+    }
+
+
+
+    /**
+     * @param array $accountIds
+     * @return mixed
+     * 获取子账号
+     */
+    public function getSubAccount(array $accountIds = []){
+        $baiduAccountModel = new BaiDuAccountModel();
+        $builder = $baiduAccountModel->where('status', StatusEnum::ENABLE);
+
+        if(!empty($accountIds)){
+            $accountIdsStr = implode("','", $accountIds);
+            $builder->whereRaw("
+                (
+                    account_id IN ('{$accountIdsStr}')
+                    OR parent_id IN ('{$accountIdsStr}')
+                )
+            ");
+        }
+
+        $subAccount = $builder->where('parent_id', '<>', 0)->get();
+
+        return $subAccount;
+    }
+
+
+    /**
+     * @param $accounts
+     * @param array $param
+     * @param int $pageSize
+     * @return array
+     * 并发获取分页列表
+     */
+    public function multiGetPageList($accounts, $param = [],$pageSize = 200){
+
+        // 账户第一页数据
+        $accountNames = [];
+        foreach($accounts as $account){
+            $accountNames[] = $account['name'];
+        }
+        $res = $this->sdkMultiGetList($accountNames,$param,1,$pageSize);
+
+        // 查询其他页数
+        $more = [];
+        foreach($res as $v){
+            $totalPage = empty($v['totalRowNumber']) ? 1 : ceil($v['totalRowNumber']/$pageSize);
+
+            if( $totalPage > 1){
+                for($i = 2; $i <= $totalPage; $i++){
+                    $more[$i][] = $v['account_name'];
+                }
+            }
+        }
+
+        // 多页数据
+        foreach($more as $page => $accountNames){
+            $tmp = $this->sdkMultiGetList($accountNames,$param,$page,$pageSize);
+            $res = array_merge($res, $tmp);
+        }
+
+        return $res;
+    }
+
+
+    public function sdkMultiGetList($accountNames,$param,$page,$pageSize){}
+
 }

@@ -4,10 +4,11 @@ namespace App\Sdks\BaiDu;
 
 
 
-use App\Sdks\BaiDu\Feed\Traits\AccountFeed;
-use App\Sdks\BaiDu\Feed\Traits\AdgroupFeed;
-use App\Sdks\BaiDu\Feed\Traits\CampaignFeed;
-use App\Sdks\BaiDu\Feed\Traits\CreativeFeed;
+use App\Sdks\BaiDu\Traits\AccountFeed;
+use App\Sdks\BaiDu\Traits\AdgroupFeed;
+use App\Sdks\BaiDu\Traits\CampaignFeed;
+use App\Sdks\BaiDu\Traits\CreativeFeed;
+use App\Sdks\BaiDu\Traits\ReportFeed;
 use App\Sdks\BaiDu\Traits\Error;
 use App\Sdks\BaiDu\Traits\MultiRequest;
 use App\Sdks\BaiDu\Traits\OcpcToken;
@@ -29,6 +30,7 @@ class BaiDu
     use CampaignFeed;
     use AdgroupFeed;
     use CreativeFeed;
+    use ReportFeed;
 
     /**
      * 公共接口地址
