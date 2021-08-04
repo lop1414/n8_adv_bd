@@ -12,6 +12,20 @@ class BaiDuAccountModel extends BaiDuModel
      */
     protected $table = 'baidu_accounts';
 
+    /**
+     * 关联到模型数据表的主键
+     *
+     * @var string
+     */
+    protected $primaryKey = 'account_id';
+
+
+
+    /**
+     * @var bool
+     * 是否自增
+     */
+    public $incrementing = false;
 
 
 
@@ -52,7 +66,7 @@ class BaiDuAccountModel extends BaiDuModel
      * 产品
      */
     public function manageAccount(){
-        return $this->hasOne('App\Models\BaiDu\BaiDuAccountModel', 'id', 'parent_id');
+        return $this->hasOne('App\Models\BaiDu\BaiDuAccountModel', 'account_id', 'parent_id');
     }
 
 }

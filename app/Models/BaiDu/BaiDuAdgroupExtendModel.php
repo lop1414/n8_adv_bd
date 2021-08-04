@@ -21,11 +21,6 @@ class BaiDuAdgroupExtendModel extends BaseModel
      */
     protected $primaryKey = 'adgroup_feed_id';
 
-    /**
-     * @var string
-     * 主键数据类型
-     */
-    public $keyType = 'string';
 
     /**
      * @var bool
