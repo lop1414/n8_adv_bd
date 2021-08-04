@@ -24,7 +24,7 @@ class BaiDuAccountService extends BaiDuService
             }
             $info->account_id = $item['userid'];
             $info->name = $item['username'];
-            $info->parent_id = $this->manageAccount['id'];
+            $info->parent_id = $this->manageAccount['account_id'];
             $info->admin_id = 0;
             $info->extends = [
                 'remark' => $item['remark']
