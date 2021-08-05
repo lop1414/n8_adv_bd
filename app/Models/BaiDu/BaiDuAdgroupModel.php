@@ -101,4 +101,13 @@ class BaiDuAdgroupModel extends BaiDuModel
         return $this->hasOne('App\Models\BaiDu\BaiDuAdgroupExtendModel', 'adgroup_feed_id', 'id');
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * 关联渠道模型 一对一
+     */
+    public function channel_adgroup(){
+        return $this->hasOne('App\Models\ChannelAdgroupModel', 'adgroup_feed_id', 'id');
+    }
+
 }

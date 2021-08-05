@@ -27,6 +27,7 @@ class BaiDuAdgroupController extends BaiDuController
         $this->curdService->selectQueryAfter(function(){
             foreach ($this->curdService->responseData['list'] as $item){
                 $item->baidu_adgroup_extends;
+                $item->channel_adgroup;
             }
         });
 
