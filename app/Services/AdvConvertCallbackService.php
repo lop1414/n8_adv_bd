@@ -45,28 +45,31 @@ class AdvConvertCallbackService extends ConvertCallbackService
 
         $eventType = $eventTypeMap[$item->convert_type];
 
-
-        $this->runCallback($item, $eventType);
+        //付费金额
+        $payAmount = 0;
+//        if(!empty($payAmount)){
+//            $payAmount =  $item->extends->amount;
+//        }
+        $this->runCallback($item->click, $eventType, $payAmount);
 
         return true;
     }
 
     /**
-     * @param $item
+     * @param $click
      * @param $eventType
      * @return bool
      * @throws CustomException
      * 执行回传
      */
-    public function runCallback($item, $eventType){
-
-        $click = $item->click;
-        // 付费金额
-        $payAmount = 0;
-//        if(!empty($item->extends->amount)){
-//
-//            $payAmount =  $item->extends->amount * 100;
-//        }
+    /**
+     * @param $click
+     * @param $eventType
+     * @param int $payAmount 付费金额
+     * @return bool
+     * @throws CustomException
+     */
+    public function runCallback($click, $eventType,$payAmount = 0){
 
         if(!empty($click->link)){
             $this->linkCallback($click, $eventType, $payAmount);
@@ -103,20 +106,25 @@ class AdvConvertCallbackService extends ConvertCallbackService
         }
 
         // token
-        $adgroupId = $click->adgroup_id;
-        $adgroup = (new BaiDuAdgroupModel())->find($adgroupId);
-        if(empty($adgroup)){
-            throw new CustomException([
-                'code' => 'NOT_ADGROUP',
-                'message' => '找不到推广单元信息',
-                'log' => true,
-                'data' => [
-                    'click_id' => $click->id,
-                    'adgroup_id' => $adgroupId,
-                ],
-            ]);
+        $accountId = $click->account_id ?? 0;
+        if(empty($accountId)){
+            $adgroupId = $click->adgroup_id;
+            $adgroup = (new BaiDuAdgroupModel())->find($adgroupId);
+            if(empty($adgroup)){
+                throw new CustomException([
+                    'code' => 'NOT_ADGROUP',
+                    'message' => '找不到推广单元信息',
+                    'log' => true,
+                    'data' => [
+                        'click_id' => $click->id,
+                        'adgroup_id' => $adgroupId,
+                    ],
+                ]);
+            }
+            $accountId = $adgroup->account_id;
         }
-        $account = (new BaiDuAccountModel())->where('account_id',$adgroup->account_id)->first();
+
+        $account = (new BaiDuAccountModel())->where('account_id',$accountId)->first();
         $ocpcToken = $account->ocpc_token;
         // 未配置token
         if(empty($ocpcToken) && $account->parent_id > 0){
@@ -161,7 +169,7 @@ class AdvConvertCallbackService extends ConvertCallbackService
             'message' => '转化回传失败 - 回传链接回传',
             'log' => true,
             'data' => [
-                'click_id' => $click->id,
+                'click_id' => $click->id ?? 0,
                 'event_type' => $eventType,
                 'pay_amount' => $payAmount
             ],

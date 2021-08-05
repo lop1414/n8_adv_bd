@@ -53,6 +53,12 @@ $router->group([
         });
     });
 
+    // 点击
+    $router->group(['prefix' => 'click'], function () use ($router) {
+        $router->post('select', 'Admin\ClickController@select');
+        $router->post('callback', 'Admin\ClickController@callback');
+    });
+
 
     // 任务
     $router->group(['prefix' => 'task'], function () use ($router) {
