@@ -76,6 +76,15 @@ $router->group([
             $router->post('read', 'Admin\SubTask\TaskBaiDuSyncController@read');
         });
     });
+
+    // 回传策略
+    $router->group(['prefix' => 'convert_callback_strategy'], function () use ($router) {
+        $router->post('create', '\\App\Common\Controllers\Admin\ConvertCallbackStrategyController@create');
+        $router->post('update', '\\App\Common\Controllers\Admin\ConvertCallbackStrategyController@update');
+        $router->post('select', '\\App\Common\Controllers\Admin\ConvertCallbackStrategyController@select');
+        $router->post('get', '\\App\Common\Controllers\Admin\ConvertCallbackStrategyController@get');
+        $router->post('read', '\\App\Common\Controllers\Admin\ConvertCallbackStrategyController@read');
+    });
 });
 
 // 前台接口

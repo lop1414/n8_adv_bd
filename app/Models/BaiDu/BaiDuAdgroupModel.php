@@ -40,6 +40,41 @@ class BaiDuAdgroupModel extends BaiDuModel
         'remark_status'
     ];
 
+    /**
+     * 属性访问器
+     * @param $value
+     * @return mixed
+     */
+    public function getBidAttribute($value){
+        return $value / 100;
+    }
+
+    /**
+     * 属性修饰器
+     * @param $value
+     */
+    public function setBidAttribute($value){
+        $this->attributes['bid'] = $value * 100;
+    }
+
+
+    /**
+     * 属性访问器
+     * @param $value
+     * @return mixed
+     */
+    public function getOcpcBidAttribute($value){
+        return $value / 100;
+    }
+
+    /**
+     * 属性修饰器
+     * @param $value
+     */
+    public function setOcpcBidAttribute($value){
+        $this->attributes['ocpc_bid'] = $value * 100;
+    }
+
 
     /**
      * 属性访问器
@@ -56,6 +91,14 @@ class BaiDuAdgroupModel extends BaiDuModel
      */
     public function setExtendsAttribute($value){
         $this->attributes['extends'] = json_encode($value);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * 关联推广单元扩展模型 一对一
+     */
+    public function baidu_adgroup_extends(){
+        return $this->hasOne('App\Models\BaiDu\BaiDuAdgroupExtendModel', 'adgroup_feed_id', 'id');
     }
 
 }
