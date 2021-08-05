@@ -26,7 +26,7 @@ class BaiDuAdgroupController extends BaiDuController
         parent::selectPrepare();
         $this->curdService->selectQueryAfter(function(){
             foreach ($this->curdService->responseData['list'] as $item){
-                $item->baidu_adgroup_extends;
+                $item->baidu_adgroup_extends->convert_callback_strategy;
                 $item->channel_adgroup;
             }
         });
