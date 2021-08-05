@@ -27,8 +27,11 @@ class BaiDuAdgroupController extends BaiDuController
         parent::selectPrepare();
         $this->curdService->selectQueryAfter(function(){
             foreach ($this->curdService->responseData['list'] as $item){
-                $item->baidu_adgroup_extends;
-                $item->convert_callback_strategy = ConvertCallbackStrategyModel::find($item->baidu_adgroup_extends->convert_callback_strategy_id);
+                if(!empty($ad->baidu_adgroup_extends)){
+                    $item->convert_callback_strategy = ConvertCallbackStrategyModel::find($item->baidu_adgroup_extends->convert_callback_strategy_id);
+                }else{
+                    $item->convert_callback_strategy = null;
+                }
                 $item->channel_adgroup;
             }
         });
