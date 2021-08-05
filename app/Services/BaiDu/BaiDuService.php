@@ -219,11 +219,12 @@ class BaiDuService extends BaseService
 
         $group = [];
         foreach($s as $accountId => $ss){
-            $group[$accountId] = (new BaiDuAccountModel())
+            $tmp = (new BaiDuAccountModel())
                 ->where('account_id',$accountId)
-                ->first()
-                ->toArray();
+                ->first();
 
+            if(empty($tmp)) continue;
+            $group[$accountId] = $tmp->toArray();
             $group[$accountId]['list'] = $ss;
         }
 
