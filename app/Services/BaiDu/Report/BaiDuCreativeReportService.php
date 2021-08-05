@@ -47,20 +47,20 @@ class BaiDuCreativeReportService extends BaiDuReportService
      * 按账户消耗执行
      */
     protected function runByAccountCost($accountIds){
-        return $accountIds;
-//        $oceanAccountReportService = new OceanAccountReportService();
-//        $accountReportMap = $oceanAccountReportService->getAccountReportByDate()->pluck('cost', 'account_id');
-//
-//        $creativeReportMap = $this->getAccountReportByDate()->pluck('cost', 'account_id');
-//
-//        $creativeAccountIds = ['xx'];
-//        foreach($accountReportMap as $accountId => $cost){
-//            if(isset($creativeReportMap[$accountId]) && bcsub($creativeReportMap[$accountId] * 100, $cost * 100) >= 0){
-//                continue;
-//            }
-//            $creativeAccountIds[] = $accountId;
-//        }
-//
-//        return $creativeAccountIds;
+
+        $baiduAccountReportService = new BaiDuAccountReportService();
+        $accountReportMap = $baiduAccountReportService->getAccountReportByDate()->pluck('cost', 'account_id');
+
+        $creativeReportMap = $this->getAccountReportByDate()->pluck('cost', 'account_id');
+
+        $creativeAccountIds = ['xx'];
+        foreach($accountReportMap as $accountId => $cost){
+            if(isset($creativeReportMap[$accountId]) && bcsub($creativeReportMap[$accountId] * 100, $cost * 100) >= 0){
+                continue;
+            }
+            $creativeAccountIds[] = $accountId;
+        }
+
+        return $creativeAccountIds;
     }
 }

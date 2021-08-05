@@ -5,6 +5,8 @@ namespace App\Console;
 use App\Common\Console\ConvertCallbackCommand;
 use App\Common\Console\Queue\QueueClickCommand;
 use App\Console\Commands\BaiDu\BaiDuSyncCommand;
+use App\Console\Commands\BaiDu\Report\BaiDuSyncAccountReportCommand;
+use App\Console\Commands\BaiDu\Report\BaiDuSyncCreativeReportCommand;
 use App\Console\Commands\SyncChannelAdgroupCommand;
 use App\Console\Commands\TestCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -27,6 +29,10 @@ class Kernel extends ConsoleKernel
 
         // 转化回传
         ConvertCallbackCommand::class,
+
+        // 报表
+        BaiDuSyncCreativeReportCommand::class,
+        BaiDuSyncAccountReportCommand::class,
     ];
 
     /**
@@ -47,13 +53,18 @@ class Kernel extends ConsoleKernel
         // 转化上报
         $schedule->command('convert_callback')->cron('* * * * *');
 
-        // 百度同步
+        // 百度同步任务
+        $schedule->command('baidu:sync --type=campaign')->cron('*/15 * * * *');
+        $schedule->command('baidu:sync --type=adgroup')->cron('*/15 * * * *');
+        $schedule->command('baidu:sync --type=creative')->cron('*/15 * * * *');
 
-        // 推广计划
-        $schedule->command('artisan baidu:sync --type=campaign')->cron('*/15 * * * *');
-        // 推广单元
-        $schedule->command('artisan baidu:sync --type=adgroup')->cron('*/15 * * * *');
-        // 创意
-        $schedule->command('artisan baidu:sync --type=creative')->cron('*/15 * * * *');
+        // 百度报表同步
+        $schedule->command('baidu:sync_account_report --date=today --running=1')->cron('*/5 * * * *');
+        $schedule->command('baidu:sync_account_report --date=yesterday --key_suffix=yesterday')->cron('25-30 9 * * *');
+
+        // 百度创意报表同步
+        $schedule->command('baidu:sync_creative_report --date=today --running=1 --run_by_account_cost=1')->cron('*/5 * * * *');
+        $schedule->command('baidu:sync_creative_report --date=yesterday --key_suffix=yesterday')->cron('25-30 9 * * *');
+
     }
 }

@@ -36,7 +36,7 @@ class BaiDuReportModel extends BaiDuModel
      */
     public function getCostAttribute($value)
     {
-        return $value / 100;
+        return $value / 100000;
     }
 
     /**
@@ -45,6 +45,6 @@ class BaiDuReportModel extends BaiDuModel
      */
     public function setCostAttribute($value)
     {
-        $this->attributes['cost'] = $value * 100;
+        $this->attributes['cost'] = $value * 100000;
     }
 }
