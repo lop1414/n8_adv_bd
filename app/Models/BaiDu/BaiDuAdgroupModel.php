@@ -95,6 +95,14 @@ class BaiDuAdgroupModel extends BaiDuModel
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * 关联推广计划
+     */
+    public function baidu_campaign(){
+        return $this->hasOne('App\Models\BaiDu\BaiDuCampaignModel', 'id', 'campaign_feed_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      * 关联推广单元扩展模型 一对一
      */
     public function baidu_adgroup_extends(){
@@ -109,5 +117,6 @@ class BaiDuAdgroupModel extends BaiDuModel
     public function channel_adgroup(){
         return $this->hasOne('App\Models\ChannelAdgroupModel', 'adgroup_feed_id', 'id');
     }
+
 
 }

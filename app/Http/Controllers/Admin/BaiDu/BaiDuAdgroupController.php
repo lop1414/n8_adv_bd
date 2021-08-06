@@ -24,7 +24,20 @@ class BaiDuAdgroupController extends BaiDuController
      * 分页列表预处理
      */
     public function selectPrepare(){
+
         parent::selectPrepare();
+        $this->curdService->selectQueryBefore(function(){
+            $this->curdService->customBuilder(function($builder){
+                // 筛选渠道
+                $channelId = $this->curdService->requestData['channel_id'] ?? '';
+                if($channelId){
+                    $builder->whereRaw("id IN (
+                        SELECT adgroup_feed_id FROM channel_adgroups
+                            WHERE channel_id = {$channelId}
+                    )");
+                }
+            });
+        });
         $this->curdService->selectQueryAfter(function(){
             foreach ($this->curdService->responseData['list'] as $item){
                 if(!empty($item->baidu_adgroup_extends)){
@@ -33,6 +46,8 @@ class BaiDuAdgroupController extends BaiDuController
                     $item->convert_callback_strategy = null;
                 }
                 $item->channel_adgroup;
+                $item->baidu_campaign;
+                $item->baidu_account;
             }
         });
 

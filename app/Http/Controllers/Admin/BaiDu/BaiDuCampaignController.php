@@ -24,7 +24,11 @@ class BaiDuCampaignController extends BaiDuController
      */
     public function selectPrepare(){
         parent::selectPrepare();
-
+        $this->curdService->selectQueryAfter(function(){
+            foreach ($this->curdService->responseData['list'] as $item){
+                $item->baidu_account;
+            }
+        });
     }
 
 

@@ -24,4 +24,13 @@ class BaiDuModel extends BaseModel
         }
     }
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * 关联账户
+     */
+    public function baidu_account(){
+        return $this->hasOne('App\Models\BaiDu\BaiDuAccountModel', 'account_id', 'account_id');
+    }
+
 }

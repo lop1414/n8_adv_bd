@@ -23,6 +23,18 @@ class BaiDuController extends BaseController
     public function selectPrepare(){
         $this->curdService->selectQueryBefore(function(){
             $this->curdService->customBuilder(function($builder){
+                // 筛选管理员
+                $adminId = $this->curdService->requestData['admin_id'] ?? '';
+                if($adminId){
+                    $builder->whereRaw("account_id IN (
+                        SELECT account_id FROM baidu_accounts
+                            WHERE admin_id = {$adminId}
+                    )");
+                }
+            });
+        });
+        $this->curdService->selectQueryBefore(function(){
+            $this->curdService->customBuilder(function($builder){
                 $builder->withPermission();
             });
         });
