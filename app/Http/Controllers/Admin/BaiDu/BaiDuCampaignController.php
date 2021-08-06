@@ -27,6 +27,7 @@ class BaiDuCampaignController extends BaiDuController
         $this->curdService->selectQueryAfter(function(){
             foreach ($this->curdService->responseData['list'] as $item){
                 $item->baidu_account;
+                $item->admin_name = $this->adminMap[$item->baidu_account->admin_id]['name'];
             }
         });
     }

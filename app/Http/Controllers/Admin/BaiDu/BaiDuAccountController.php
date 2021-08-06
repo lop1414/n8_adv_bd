@@ -43,9 +43,8 @@ class BaiDuAccountController extends BaiDuController
      */
     public function getPrepare(){
         $this->curdService->getQueryAfter(function(){
-            $map = $this->getAdminUserMap();
             foreach ($this->curdService->responseData as $item){
-                $item->admin_name = $item->admin_id ? $map[$item->admin_id]['name'] : '';
+                $item->admin_name =  $this->adminMap[$item->admin_id]['name'];
                 $item->manageAccount;
             }
         });

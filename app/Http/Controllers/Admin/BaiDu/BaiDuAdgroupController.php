@@ -39,6 +39,7 @@ class BaiDuAdgroupController extends BaiDuController
             });
         });
         $this->curdService->selectQueryAfter(function(){
+
             foreach ($this->curdService->responseData['list'] as $item){
                 if(!empty($item->baidu_adgroup_extends)){
                     $item->convert_callback_strategy = ConvertCallbackStrategyModel::find($item->baidu_adgroup_extends->convert_callback_strategy_id);
@@ -48,6 +49,7 @@ class BaiDuAdgroupController extends BaiDuController
                 $item->channel_adgroup;
                 $item->baidu_campaign;
                 $item->baidu_account;
+                $item->admin_name = $this->adminMap[$item->baidu_account->admin_id]['name'];
             }
         });
 

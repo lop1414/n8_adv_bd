@@ -16,6 +16,12 @@ use App\Services\Task\TaskBaiDuSyncService;
 class BaiDuController extends BaseController
 {
 
+    protected $adminMap;
+
+    public function __construct(){
+        parent::__construct();
+        $this->adminMap = $this->getAdminUserMap();
+    }
 
     /**
      * 列表预处理
