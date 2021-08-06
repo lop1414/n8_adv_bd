@@ -31,9 +31,6 @@ $router->group([
         $router->post('read', 'Admin\BaiDu\AccountController@read');
         $router->post('enable', 'Admin\BaiDu\AccountController@enable');
         $router->post('disable', 'Admin\BaiDu\AccountController@disable');
-        $router->post('delete', 'Admin\BaiDu\AccountController@delete');
-        $router->post('batch_enable', 'Admin\BaiDu\AccountController@batchEnable');
-        $router->post('batch_disable', 'Admin\BaiDu\AccountController@batchDisable');
         $router->post('sync', 'Admin\BaiDu\AccountController@syncAccount');
         $router->post('batch_update_admin', 'Admin\BaiDu\AccountController@batchUpdateAdmin');
     });
