@@ -35,6 +35,7 @@ $router->group([
         $router->post('batch_enable', 'Admin\BaiDu\BaiDuAccountController@batchEnable');
         $router->post('batch_disable', 'Admin\BaiDu\BaiDuAccountController@batchDisable');
         $router->post('sync', 'Admin\BaiDu\BaiDuAccountController@syncAccount');
+        $router->post('batch_update_admin', 'Admin\BaiDu\BaiDuAccountController@batchUpdateAdmin');
     });
 
     //百度

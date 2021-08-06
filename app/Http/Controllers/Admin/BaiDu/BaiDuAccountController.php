@@ -145,4 +145,30 @@ class BaiDuAccountController extends BaiDuController
         return $this->success();
 
     }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * @throws CustomException
+     * 批量更新管理员
+     */
+    public function batchUpdateAdmin(Request $request){
+        $req = $request->all();
+        $this->validRule($req,[
+            'admin_id'    =>  'required',
+            'account_ids' =>  'required'
+        ]);
+
+        foreach ($req['account_ids'] as $accountId){
+            $account = (new BaiDuAccountModel)
+                ->where('account_id',$accountId)
+                ->first();
+            if(empty($account)) continue;
+            $account->admin_id = $req['admin_id'];
+            $account->save();
+        }
+
+        return $this->success();
+    }
 }
