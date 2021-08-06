@@ -74,10 +74,7 @@ class BaiDuAccountController extends BaiDuController
     public function saveValidRule(){
         $this->curdService->addField('account_id')->addValidRule('required');
         $this->curdService->addField('name')->addValidRule('required');
-        $this->curdService->addField('token')->addValidRule('required');
-        $this->curdService->addField('ocpc_token')->addValidRule('required');
         $this->curdService->addField('rebate')->addValidRule('required');
-        $this->curdService->addField('password')->addValidRule('required');
         $this->curdService->addField('status')
             ->addValidEnum(StatusEnum::class)
             ->addDefaultValue(StatusEnum::ENABLE);
