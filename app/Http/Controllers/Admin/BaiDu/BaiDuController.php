@@ -23,6 +23,8 @@ class BaiDuController extends BaseController
     public function selectPrepare(){
         $this->curdService->selectQueryBefore(function(){
             $this->curdService->customBuilder(function($builder){
+                $builder->withPermission();
+
                 // 筛选管理员
                 $adminId = $this->curdService->requestData['admin_id'] ?? '';
                 if($adminId){
@@ -31,11 +33,6 @@ class BaiDuController extends BaseController
                             WHERE admin_id = {$adminId}
                     )");
                 }
-            });
-        });
-        $this->curdService->selectQueryBefore(function(){
-            $this->curdService->customBuilder(function($builder){
-                $builder->withPermission();
             });
         });
     }
