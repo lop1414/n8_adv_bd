@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\BaiDu;
 use App\Common\Models\ConvertCallbackStrategyModel;
 use App\Models\BaiDu\BaiDuAdgroupModel;
 
-class BaiDuAdgroupController extends BaiDuController
+class AdgroupController extends BaiDuController
 {
 
     /**

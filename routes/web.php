@@ -24,34 +24,39 @@ $router->group([
 
     // 账户
     $router->group(['prefix' => 'baidu_account'], function () use ($router) {
-        $router->post('create', 'Admin\BaiDu\BaiDuAccountController@create');
-        $router->post('update', 'Admin\BaiDu\BaiDuAccountController@update');
-        $router->post('select', 'Admin\BaiDu\BaiDuAccountController@select');
-        $router->post('get', 'Admin\BaiDu\BaiDuAccountController@get');
-        $router->post('read', 'Admin\BaiDu\BaiDuAccountController@read');
-        $router->post('enable', 'Admin\BaiDu\BaiDuAccountController@enable');
-        $router->post('disable', 'Admin\BaiDu\BaiDuAccountController@disable');
-        $router->post('delete', 'Admin\BaiDu\BaiDuAccountController@delete');
-        $router->post('batch_enable', 'Admin\BaiDu\BaiDuAccountController@batchEnable');
-        $router->post('batch_disable', 'Admin\BaiDu\BaiDuAccountController@batchDisable');
-        $router->post('sync', 'Admin\BaiDu\BaiDuAccountController@syncAccount');
-        $router->post('batch_update_admin', 'Admin\BaiDu\BaiDuAccountController@batchUpdateAdmin');
+        $router->post('create', 'Admin\BaiDu\AccountController@create');
+        $router->post('update', 'Admin\BaiDu\AccountController@update');
+        $router->post('select', 'Admin\BaiDu\AccountController@select');
+        $router->post('get', 'Admin\BaiDu\AccountController@get');
+        $router->post('read', 'Admin\BaiDu\AccountController@read');
+        $router->post('enable', 'Admin\BaiDu\AccountController@enable');
+        $router->post('disable', 'Admin\BaiDu\AccountController@disable');
+        $router->post('delete', 'Admin\BaiDu\AccountController@delete');
+        $router->post('batch_enable', 'Admin\BaiDu\AccountController@batchEnable');
+        $router->post('batch_disable', 'Admin\BaiDu\AccountController@batchDisable');
+        $router->post('sync', 'Admin\BaiDu\AccountController@syncAccount');
+        $router->post('batch_update_admin', 'Admin\BaiDu\AccountController@batchUpdateAdmin');
     });
 
     //百度
     $router->group(['prefix' => 'baidu'], function () use ($router) {
         // 推广计划
         $router->group(['prefix' => 'campaign'], function () use ($router) {
-            $router->post('select', 'Admin\BaiDu\BaiDuCampaignController@select');
-            $router->post('get', 'Admin\BaiDu\BaiDuCampaignController@get');
-            $router->post('read', 'Admin\BaiDu\BaiDuCampaignController@read');
+            $router->post('select', 'Admin\BaiDu\CampaignController@select');
+            $router->post('get', 'Admin\BaiDu\CampaignController@get');
+            $router->post('read', 'Admin\BaiDu\CampaignController@read');
         });
         // 推广单元
         $router->group(['prefix' => 'adgroup'], function () use ($router) {
-            $router->post('select', 'Admin\BaiDu\BaiDuAdgroupController@select');
-            $router->post('get', 'Admin\BaiDu\BaiDuAdgroupController@get');
-            $router->post('read', 'Admin\BaiDu\BaiDuAdgroupController@read');
+            $router->post('select', 'Admin\BaiDu\AdgroupController@select');
+            $router->post('get', 'Admin\BaiDu\AdgroupController@get');
+            $router->post('read', 'Admin\BaiDu\AdgroupController@read');
         });
+        // 推广单元扩展
+        $router->group(['prefix' => 'adgroup_extend'], function () use ($router) {
+            $router->post('batch_update', 'Admin\BaiDu\AdgroupExtendController@batchUpdate');
+        });
+
     });
 
     // 点击

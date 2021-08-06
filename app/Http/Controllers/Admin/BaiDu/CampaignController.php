@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\BaiDu;
 
 use App\Models\BaiDu\BaiDuCampaignModel;
 
-class BaiDuCampaignController extends BaiDuController
+class CampaignController extends BaiDuController
 {
 
     /**

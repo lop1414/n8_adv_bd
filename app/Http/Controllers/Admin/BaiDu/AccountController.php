@@ -8,7 +8,7 @@ use App\Models\BaiDu\BaiDuAccountModel;
 use App\Services\BaiDu\BaiDuAccountService;
 use Illuminate\Http\Request;
 
-class BaiDuAccountController extends BaiDuController
+class AccountController extends BaiDuController
 {
 
     /**
