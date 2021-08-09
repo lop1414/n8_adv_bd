@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 27/07/2021 16:18:43
+ Date: 09/08/2021 12:20:09
 */
 
 SET NAMES utf8mb4;
@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `baidu_adgroups`;
 CREATE TABLE `baidu_adgroups` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '推广单元ID',
   `account_id` bigint(11) NOT NULL COMMENT '账户ID',
-  `campaign_feed_id` bigint(11) NOT NULL COMMENT '推广计划ID',
-  `adgroup_feed_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `campaign_id` bigint(11) NOT NULL COMMENT '推广计划ID',
+  `adgroup_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `pause` tinyint(4) NOT NULL COMMENT '启停',
   `status` tinyint(4) NOT NULL COMMENT '状态',
   `bid` int(11) NOT NULL COMMENT '出价',
@@ -41,7 +41,7 @@ CREATE TABLE `baidu_adgroups` (
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `account_id` (`account_id`) USING BTREE,
-  KEY `campaign_feed_id` (`campaign_feed_id`) USING BTREE
+  KEY `campaign_id` (`campaign_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='百度信息流推广单元';
 
 SET FOREIGN_KEY_CHECKS = 1;

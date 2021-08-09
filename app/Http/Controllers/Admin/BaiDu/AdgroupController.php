@@ -32,7 +32,7 @@ class AdgroupController extends BaiDuController
                 $channelId = $this->curdService->requestData['channel_id'] ?? '';
                 if($channelId){
                     $builder->whereRaw("id IN (
-                        SELECT adgroup_feed_id FROM channel_adgroups
+                        SELECT adgroup_id FROM channel_adgroups
                             WHERE channel_id = {$channelId}
                     )");
                 }

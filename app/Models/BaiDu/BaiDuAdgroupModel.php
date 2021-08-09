@@ -25,7 +25,7 @@ class BaiDuAdgroupModel extends BaiDuModel
 
     protected $fillable = [
         'account_id',
-        'campaign_feed_id',
+        'campaign_id',
         'adgroup_feed_name',
         'pause',
         'status',
@@ -98,7 +98,7 @@ class BaiDuAdgroupModel extends BaiDuModel
      * 关联推广计划
      */
     public function baidu_campaign(){
-        return $this->hasOne('App\Models\BaiDu\BaiDuCampaignModel', 'id', 'campaign_feed_id');
+        return $this->hasOne('App\Models\BaiDu\BaiDuCampaignModel', 'id', 'campaign_id');
     }
 
     /**
@@ -106,7 +106,7 @@ class BaiDuAdgroupModel extends BaiDuModel
      * 关联推广单元扩展模型 一对一
      */
     public function baidu_adgroup_extends(){
-        return $this->hasOne('App\Models\BaiDu\BaiDuAdgroupExtendModel', 'adgroup_feed_id', 'id');
+        return $this->hasOne('App\Models\BaiDu\BaiDuAdgroupExtendModel', 'adgroup_id', 'id');
     }
 
 
@@ -115,7 +115,7 @@ class BaiDuAdgroupModel extends BaiDuModel
      * 关联渠道模型 一对一
      */
     public function channel_adgroup(){
-        return $this->hasOne('App\Models\ChannelAdgroupModel', 'adgroup_feed_id', 'id');
+        return $this->hasOne('App\Models\ChannelAdgroupModel', 'adgroup_id', 'id');
     }
 
 

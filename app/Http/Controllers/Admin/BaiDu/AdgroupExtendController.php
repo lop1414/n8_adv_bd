@@ -70,7 +70,7 @@ class AdgroupExtendController extends BaiDuController
 
             if(empty($oceanAdExtend)){
                 $oceanAdExtend = new BaiDuAdgroupExtendModel();
-                $oceanAdExtend->adgroup_feed_id = $adgroup->id;
+                $oceanAdExtend->adgroup_id = $adgroup->id;
             }
 
             $oceanAdExtend->convert_callback_strategy_id = $convertCallbackStrategyId;
