@@ -49,7 +49,7 @@ class BaiDuAdgroupService extends BaiDuService
                     'id'                => $adgroup['adgroupFeedId'],
                     'account_id'        => $account['account_id'],
                     'campaign_id'       => $adgroup['campaignFeedId'],
-                    'adgroup_name'      => $adgroup['adgroupFeedName'],
+                    'name'              => $adgroup['adgroupFeedName'],
                     'pause'             => $adgroup['pause'],
                     'status'            => $adgroup['status'],
                     'bid'               => $adgroup['bid'] * 100,

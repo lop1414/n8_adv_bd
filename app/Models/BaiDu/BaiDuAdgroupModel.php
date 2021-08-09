@@ -26,7 +26,7 @@ class BaiDuAdgroupModel extends BaiDuModel
     protected $fillable = [
         'account_id',
         'campaign_id',
-        'adgroup_feed_name',
+        'name',
         'pause',
         'status',
         'bid',

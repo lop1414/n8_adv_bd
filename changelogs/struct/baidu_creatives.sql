@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 09/08/2021 12:24:18
+ Date: 09/08/2021 16:20:21
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +25,7 @@ CREATE TABLE `baidu_creatives` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '创意id',
   `account_id` bigint(11) NOT NULL COMMENT '账户ID',
   `adgroup_id` bigint(11) NOT NULL COMMENT '推广单元ID',
-  `creative_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `materialstyle` int(11) NOT NULL COMMENT '创意样式ID',
   `pause` tinyint(4) NOT NULL COMMENT '启停',
   `status` tinyint(4) NOT NULL COMMENT '状态',
