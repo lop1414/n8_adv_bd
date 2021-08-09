@@ -116,6 +116,12 @@ class AdvClickService extends ClickService
 
         $data['extends']['combid'] = $data['combid'] ?? '';
 
+        // 制造link
+        if(empty($data['link']) && empty($data['callback_url']) && !empty($data['bd_vid'])){
+            $data['link'] =  'https://aisite.wejianzhan.com?bd_vid='.$data['bd_vid'];
+        }
+
+
         return $data;
     }
 
