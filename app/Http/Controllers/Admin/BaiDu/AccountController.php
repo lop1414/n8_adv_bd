@@ -86,14 +86,8 @@ class AccountController extends BaiDuController
      */
     public function createPrepare(){
         $this->saveValidRule();
-
+        $this->curdService->addColumns(['account_id']);
         $this->curdService->saveBefore(function(){
-            if($this->curdService->getModel()->exist('account_id', $this->curdService->handleData['account_id'])){
-                throw new CustomException([
-                    'code' => 'ACCOUNT_EXIST',
-                    'message' => '账户已存在'
-                ]);
-            }
             $this->curdService->handleData['parent_id'] = 0;
             $this->curdService->handleData['admin_id'] = $this->adminUser['admin_user']['id'];
 
