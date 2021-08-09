@@ -25,7 +25,7 @@ trait AdgroupFeed
                         "adgroupFeedId","campaignFeedId","adgroupFeedName","pause","status","bid","producttypes",
                         "ftypes","bidtype","ocpc","atpFeedId"
                     ],
-                    'ids'    => $item['campaign_feed_ids'],
+                    'ids'    => $item['campaign_ids'],
                     'idType' => 1
                 ],
                 'header' =>  [

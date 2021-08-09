@@ -24,7 +24,7 @@ trait CreativeFeed
                         "commentnum", "readnum", "playnum", "ideaType", "showMt", "addtime",
                         "progFlag", "approvemsgnew", "auditTimeModel", "naUrlGenerationType"
                     ],
-                    'ids'    => $item['campaign_feed_ids'],
+                    'ids'    => $item['campaign_ids'],
                     'idType' => 1
                 ],
                 'header' =>  [

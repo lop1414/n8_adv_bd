@@ -143,35 +143,34 @@ class BaiDuService extends BaseService
      * 计划不存在 异常处理 - 更新备注状态
      */
     public function handleCampaignFeedIdNotExists($item){
-        if($this->sdk->hasCampaignFeedIdNotExists($item['data'])){
+var_dump($item);
+        foreach($item['data']['header']['failures'] as $failure){
+            var_dump('计划不存在 异常处理 - 更新备注状态',$item);
 
-            // 计划被删除 更新状态
-            foreach($item['data']['header']['failures'] as $failure){
-                if(!$this->sdk->isCampaignFeedIdNotExistsByCode($failure['code'])){
-                    continue;
-                }
+            if(!$this->sdk->isCampaignFeedIdNotExistsByCode($failure['code'])){
+                continue;
+            }
 
-                $campaign = (new BaiDuCampaignModel())
-                    ->where('id',$failure['id'])
-                    ->first();
-                if(empty($campaign)) continue;
+            $campaign = (new BaiDuCampaignModel())
+                ->where('id',$failure['id'])
+                ->first();
+            if(empty($campaign)) continue;
 
-                $campaign->remark_status =  RemarkStatusEnum::DELETE;
-                $campaign->save();
+            $campaign->remark_status =  RemarkStatusEnum::DELETE;
+            $campaign->save();
 
-                $adgroups = (new BaiDuAdgroupModel())
-                    ->where('campaign_id',$failure['id'])
-                    ->get();
+            $adgroups = (new BaiDuAdgroupModel())
+                ->where('campaign_id',$failure['id'])
+                ->get();
 
-                foreach ($adgroups as $adgroup){
+            foreach ($adgroups as $adgroup){
 
-                    $adgroup->remark_status =  RemarkStatusEnum::DELETE;
-                    $adgroup->save();
+                $adgroup->remark_status =  RemarkStatusEnum::DELETE;
+                $adgroup->save();
 
-                    (new BaiDuCreativeModel())
-                        ->where('adgroup_id',$adgroup['id'])
-                        ->update(['remark_status' => RemarkStatusEnum::DELETE]);
-                }
+                (new BaiDuCreativeModel())
+                    ->where('adgroup_id',$adgroup['id'])
+                    ->update(['remark_status' => RemarkStatusEnum::DELETE]);
             }
         }
     }
