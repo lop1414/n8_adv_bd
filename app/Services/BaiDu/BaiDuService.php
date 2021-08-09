@@ -143,9 +143,8 @@ class BaiDuService extends BaseService
      * 计划不存在 异常处理 - 更新备注状态
      */
     public function handleCampaignFeedIdNotExists($item){
-var_dump($item);
+
         foreach($item['data']['header']['failures'] as $failure){
-            var_dump('计划不存在 异常处理 - 更新备注状态',$item);
 
             if(!$this->sdk->isCampaignFeedIdNotExistsByCode($failure['code'])){
                 continue;
