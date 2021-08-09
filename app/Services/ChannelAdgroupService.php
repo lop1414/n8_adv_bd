@@ -27,7 +27,7 @@ class ChannelAdgroupService extends BaseService
     public function batchUpdate($data){
         $this->validRule($data, [
             'channel_id' => 'required|integer',
-            'adgroup_feed_ids' => 'required|array',
+            'adgroup_ids' => 'required|array',
             'channel' => 'required',
             'platform' => 'required'
         ]);
@@ -37,9 +37,9 @@ class ChannelAdgroupService extends BaseService
         DB::beginTransaction();
 
         try{
-            foreach($data['adgroup_feed_ids'] as $adgroupFeedId){
+            foreach($data['adgroup_ids'] as $adgroupId){
                 $this->update([
-                    'adgroup_feed_id' => $adgroupFeedId,
+                    'adgroup_id' => $adgroupId,
                     'channel_id' => $data['channel_id'],
                     'platform' => $data['platform'],
                     'extends' => [
@@ -67,7 +67,7 @@ class ChannelAdgroupService extends BaseService
      */
     public function update($data){
         $channelAdgroupModel = new ChannelAdgroupModel();
-        $channelAdgroup = $channelAdgroupModel->where('adgroup_feed_id', $data['adgroup_feed_id'])
+        $channelAdgroup = $channelAdgroupModel->where('adgroup_id', $data['adgroup_id'])
             ->where('platform', $data['platform'])
             ->first();
 
@@ -76,15 +76,15 @@ class ChannelAdgroupService extends BaseService
             $channelAdgroup = new ChannelAdgroupModel();
         }
 
-        $channelAdgroup->adgroup_feed_id = $data['adgroup_feed_id'];
+        $channelAdgroup->adgroup_id = $data['adgroup_id'];
         $channelAdgroup->channel_id = $data['channel_id'];
         $channelAdgroup->platform = $data['platform'];
         $channelAdgroup->extends = $data['extends'];
         $ret = $channelAdgroup->save();
-        if($ret && !empty($channelAdgroup->adgroup_feed_id) && $flag != $this->buildFlag($channelAdgroup)){
+        if($ret && !empty($channelAdgroup->adgroup_id) && $flag != $this->buildFlag($channelAdgroup)){
             $this->createChannelAdLog([
-                'channel_adgroup_feed_id' => $channelAdgroup->id,
-                'adgroup_feed_id' => $data['adgroup_feed_id'],
+                'channel_adgroup_id' => $channelAdgroup->id,
+                'adgroup_id' => $data['adgroup_id'],
                 'channel_id' => $data['channel_id'],
                 'platform'   => $data['platform'],
                 'extends'    => $data['extends']
@@ -105,7 +105,7 @@ class ChannelAdgroupService extends BaseService
             $flag = '';
         }else{
             $flag = implode("_", [
-                $channelAdgroup->adgroup_feed_id,
+                $channelAdgroup->adgroup_id,
                 $channelAdgroup->channel_id,
                 $channelAdgroup->platform,
                 $adminId
@@ -121,8 +121,8 @@ class ChannelAdgroupService extends BaseService
      */
     protected function createChannelAdLog($data){
         $channelFeedCreativeLogModel = new ChannelAdgroupLogModel();
-        $channelFeedCreativeLogModel->channel_adgroup_feed_id = $data['channel_adgroup_feed_id'];
-        $channelFeedCreativeLogModel->adgroup_feed_id = $data['adgroup_feed_id'];
+        $channelFeedCreativeLogModel->channel_adgroup_id = $data['channel_adgroup_id'];
+        $channelFeedCreativeLogModel->adgroup_id = $data['adgroup_id'];
         $channelFeedCreativeLogModel->channel_id = $data['channel_id'];
         $channelFeedCreativeLogModel->platform = $data['platform'];
         $channelFeedCreativeLogModel->extends = $data['extends'];
@@ -149,7 +149,7 @@ class ChannelAdgroupService extends BaseService
         foreach($channelAdgroups as $channelAdgroup){
             if(empty($distinct[$channelAdgroup['channel_id']])){
                 // 推广单元
-                $baiduAdgroup = BaiDuAdgroupModel::find($channelAdgroup['adgroup_feed_id']);
+                $baiduAdgroup = BaiDuAdgroupModel::find($channelAdgroup['adgroup_id']);
                 if(empty($baiduAdgroup)){
                     continue;
                 }
@@ -175,47 +175,7 @@ class ChannelAdgroupService extends BaseService
         return $data;
     }
 
-    /**
-     * @param $data
-     * @return array
-     * @throws CustomException
-     * 详情
-     */
-    public function read($data){
-        $this->validRule($data, [
-            'channel_id' => 'required|integer'
-        ]);
 
-        $channelAdModel = new ChannelAdModel();
-        $adIds = $channelAdModel->where('channel_id', $data['channel_id'])->pluck('ad_id')->toArray();
-
-        $builder = new OceanAdModel();
-        $builder = $builder->whereIn('id', $adIds);
-
-        // 过滤
-        if(!empty($data['filtering'])){
-            $builder = $builder->filtering($data['filtering']);
-        }
-
-        $ads = $builder->get();
-
-        foreach($ads as $k => $v){
-            unset($ads[$k]['extends']);
-        }
-
-        foreach($ads as $ad){
-            if(!empty($ad->ocean_ad_extends)){
-                $ad->convert_callback_strategy = ConvertCallbackStrategyModel::find($ad->ocean_ad_extends->convert_callback_strategy_id);
-            }else{
-                $ad->convert_callback_strategy = null;
-            }
-        }
-
-        return [
-            'channel_id' => $data['channel_id'],
-            'list' => $ads
-        ];
-    }
 
 
     /**
@@ -265,7 +225,7 @@ class ChannelAdgroupService extends BaseService
                     unset($channel['channel_extends']);
 
                     $this->update([
-                        'adgroup_feed_id' => $baiDuFeedCreative->adgroup_feed_id,
+                        'adgroup_id' => $baiDuFeedCreative->adgroup_id,
                         'channel_id' => $param['android_channel_id'],
                         'platform' => PlatformEnum::DEFAULT,
                         'extends' => [
