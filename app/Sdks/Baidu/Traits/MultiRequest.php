@@ -85,12 +85,10 @@ $i++;
                         'error' => $v['error'],
                         'info' => $v['info'],
                         'req' => $v['req'],
-                        'result' => $result,
+                        'result' => $result['header'],
                     ],
                     ExceptionTypeEnum::CUSTOM
                 );
-
-                continue;
             }
 
             if(isset($v['req']['param'])){

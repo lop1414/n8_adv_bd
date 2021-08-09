@@ -37,13 +37,10 @@ trait Error
      * 有计划不存在的错误
      */
     public function hasCampaignFeedIdNotExists($result){
-        $errorCodes = [
-            912401411, // 计划不存在
-        ];
 
         $failures = $result['header']['failures'];
         foreach ($failures as $item){
-            if(in_array($item['code'], $errorCodes)){
+            if($this->isCampaignFeedIdNotExistsByCode($item['code'])){
                 return true;
             }
         }
