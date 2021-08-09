@@ -151,6 +151,7 @@ class AdvClickService extends ClickService
         $clickModel->callback_url = $data['callback_url'] ?? '';
         $clickModel->model = $data['model'] ?? '';
         $clickModel->link = $data['link'] ?? '';
+        $clickModel->bd_vid = $data['bd_vid'] ?? '';
         $clickModel->extends = $data['extends'] ?? [];
         $ret = $clickModel->save();
 
