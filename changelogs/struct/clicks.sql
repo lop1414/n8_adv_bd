@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 30/07/2021 15:43:45
+ Date: 09/08/2021 10:56:51
 */
 
 SET NAMES utf8mb4;
@@ -50,9 +50,9 @@ CREATE TABLE `clicks` (
   KEY `ip` (`ip`) USING BTREE,
   KEY `oaid_md5` (`oaid_md5`) USING BTREE,
   KEY `click_at` (`click_at`) USING BTREE,
-  KEY `creative_id` (`creative_id`) USING BTREE,
   KEY `channel_id` (`channel_id`) USING BTREE,
-  KEY `request_id` (`request_id`) USING BTREE
+  KEY `request_id` (`request_id`) USING BTREE,
+  KEY `adgroup_id` (`adgroup_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='百度点击表';
 
 SET FOREIGN_KEY_CHECKS = 1;
