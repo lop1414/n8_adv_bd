@@ -241,7 +241,7 @@ class ChannelAdgroupService extends BaseService
                 ->orderBy('id')
                 ->get();
 
-            $keyword = 'sign='. Advs::getAdvClickSign(AdvAliasEnum::BAI_DU);
+            $keyword = 'sign='. Advs::getAdvClickSign(AdvAliasEnum::BD);
 
             foreach($baiDuFeedCreatives as $baiDuFeedCreative){
                 $lastMaxId = $baiDuFeedCreative['id'];

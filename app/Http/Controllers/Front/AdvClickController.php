@@ -8,7 +8,7 @@ use App\Common\Enums\AdvAliasEnum;
 class AdvClickController extends ClickController
 {
     public function __construct(){
-        parent::__construct(AdvAliasEnum::BAI_DU);
+        parent::__construct(AdvAliasEnum::BD);
     }
 
     /**
