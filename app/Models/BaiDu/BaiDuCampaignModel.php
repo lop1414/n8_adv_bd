@@ -25,7 +25,7 @@ class BaiDuCampaignModel extends BaiDuModel
 
     protected $fillable = [
         'account_id',
-        'campaign_feed_name',
+        'campaign_name',
         'subject',
         'budget',
         'pause',

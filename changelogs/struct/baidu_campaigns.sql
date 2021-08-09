@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 27/07/2021 16:18:50
+ Date: 09/08/2021 12:22:00
 */
 
 SET NAMES utf8mb4;
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `baidu_campaigns`;
 CREATE TABLE `baidu_campaigns` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '计划id',
   `account_id` bigint(11) NOT NULL COMMENT '账户id',
-  `campaign_feed_name` varchar(255) NOT NULL DEFAULT '' COMMENT '计划名称',
+  `campaign_name` varchar(255) NOT NULL DEFAULT '' COMMENT '计划名称',
   `subject` int(11) NOT NULL COMMENT '推广对象',
   `budget` int(11) NOT NULL COMMENT '计划预算',
   `pause` tinyint(4) NOT NULL COMMENT '计划启停',
