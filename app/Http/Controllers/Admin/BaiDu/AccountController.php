@@ -89,7 +89,6 @@ class AccountController extends BaiDuController
         $this->curdService->addColumns(['account_id']);
         $this->curdService->saveBefore(function(){
             $this->curdService->handleData['parent_id'] = 0;
-            $this->curdService->handleData['admin_id'] = $this->adminUser['admin_user']['id'];
 
         });
     }
