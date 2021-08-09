@@ -86,7 +86,7 @@ class AdvConvertMatchService extends ConvertMatchService
             if(!empty($channelId)){
                 $builder = $builder->whereRaw("
                 adgroup_id IN (
-                    SELECT adgroup_feed_id FROM channel_adgroups
+                    SELECT adgroup_id FROM channel_adgroups
                         WHERE channel_id = {$channelId}
                 )
             ");

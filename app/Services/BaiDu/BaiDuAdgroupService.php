@@ -28,7 +28,7 @@ class BaiDuAdgroupService extends BaiDuService
             if(empty($campaignIds)) continue;
 
             $params[] = [
-                'campaign_feed_ids' => $campaignIds,
+                'campaign_ids' => $campaignIds,
                 'account_name'      => $account['name']
             ];
         }
@@ -48,8 +48,8 @@ class BaiDuAdgroupService extends BaiDuService
                 $saveData[] = [
                     'id'                => $adgroup['adgroupFeedId'],
                     'account_id'        => $account['account_id'],
-                    'campaign_feed_id'  => $adgroup['campaignFeedId'],
-                    'adgroup_feed_name' => $adgroup['adgroupFeedName'],
+                    'campaign_id'       => $adgroup['campaignFeedId'],
+                    'adgroup_name'      => $adgroup['adgroupFeedName'],
                     'pause'             => $adgroup['pause'],
                     'status'            => $adgroup['status'],
                     'bid'               => $adgroup['bid'] * 100,

@@ -30,7 +30,7 @@ class BaiDuCampaignService extends BaiDuService
                 $saveData[] = [
                     'id'                => $campaign['campaignFeedId'],
                     'account_id'        => $account['account_id'],
-                    'campaign_feed_name'=> $campaign['campaignFeedName'],
+                    'campaign_name'     => $campaign['campaignFeedName'],
                     'subject'           => $campaign['subject'],
                     'budget'            => $campaign['budget'] * 100,
                     'pause'             => $campaign['pause'],

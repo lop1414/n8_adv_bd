@@ -160,7 +160,7 @@ class BaiDuService extends BaseService
                 $campaign->save();
 
                 $adgroups = (new BaiDuAdgroupModel())
-                    ->where('campaign_feed_id',$failure['id'])
+                    ->where('campaign_id',$failure['id'])
                     ->get();
 
                 foreach ($adgroups as $adgroup){
@@ -169,7 +169,7 @@ class BaiDuService extends BaseService
                     $adgroup->save();
 
                     (new BaiDuCreativeModel())
-                        ->where('adgroup_feed_id',$adgroup['id'])
+                        ->where('adgroup_id',$adgroup['id'])
                         ->update(['remark_status' => RemarkStatusEnum::DELETE]);
                 }
             }

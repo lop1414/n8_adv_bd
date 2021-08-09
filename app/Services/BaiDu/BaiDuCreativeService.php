@@ -28,7 +28,7 @@ class BaiDuCreativeService extends BaiDuService
             if(empty($campaignIds)) continue;
 
             $params[] = [
-                'campaign_feed_ids' => $campaignIds,
+                'campaign_ids' => $campaignIds,
                 'account_name'      => $account['name']
             ];
         }
@@ -47,8 +47,8 @@ class BaiDuCreativeService extends BaiDuService
                 $saveData[] = [
                     'id'                => $creative['creativeFeedId'],
                     'account_id'        => $account['account_id'],
-                    'adgroup_feed_id'   => $creative['adgroupFeedId'],
-                    'creative_feed_name'=> $creative['creativeFeedName'],
+                    'adgroup_id'   => $creative['adgroupFeedId'],
+                    'creative_name'=> $creative['creativeFeedName'],
                     'materialstyle'     => $creative['materialstyle'],
                     'pause'             => $creative['pause'],
                     'status'            => $creative['status'],
