@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 27/07/2021 16:19:09
+ Date: 09/08/2021 12:24:18
 */
 
 SET NAMES utf8mb4;
@@ -24,8 +24,8 @@ DROP TABLE IF EXISTS `baidu_creatives`;
 CREATE TABLE `baidu_creatives` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '创意id',
   `account_id` bigint(11) NOT NULL COMMENT '账户ID',
-  `adgroup_feed_id` bigint(11) NOT NULL COMMENT '推广单元ID',
-  `creative_feed_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `adgroup_id` bigint(11) NOT NULL COMMENT '推广单元ID',
+  `creative_name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
   `materialstyle` int(11) NOT NULL COMMENT '创意样式ID',
   `pause` tinyint(4) NOT NULL COMMENT '启停',
   `status` tinyint(4) NOT NULL COMMENT '状态',
@@ -38,7 +38,7 @@ CREATE TABLE `baidu_creatives` (
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `account_id` (`account_id`) USING BTREE,
-  KEY `adgroup_feed_id` (`adgroup_feed_id`) USING BTREE
+  KEY `adgroup_id` (`adgroup_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='百度信息流创意';
 
 SET FOREIGN_KEY_CHECKS = 1;
