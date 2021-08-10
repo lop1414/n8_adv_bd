@@ -296,4 +296,33 @@ class BaiDuService extends BaseService
 
     public function sdkMultiGetList($accountNames,$param,$page,$pageSize){}
 
+
+
+    public function getCampaignParamByAccount($accounts){
+        $params = [];
+        foreach ($accounts as $account){
+            // 获取计划ID
+            $campaignIds = [];
+
+            $campaigns = (new BaiDuCampaignModel())
+                ->where('account_id',$account['account_id'])
+                ->where('remark_status','!=',RemarkStatusEnum::DELETE)
+                ->get();
+
+            foreach ($campaigns as $campaign){
+                $this->setAccountMap($account);
+                $campaignIds[] = $campaign['id'];
+            }
+
+            if(empty($campaignIds)) continue;
+
+            $params[] = [
+                'campaign_ids'      => $campaignIds,
+                'account_name'      => $account['name']
+            ];
+        }
+        return $params;
+    }
+
+
 }

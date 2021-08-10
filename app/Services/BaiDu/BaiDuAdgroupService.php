@@ -9,29 +9,11 @@ use App\Models\BaiDu\BaiDuCampaignModel;
 class BaiDuAdgroupService extends BaiDuService
 {
 
+
     public function syncItem($subAccount){
 
-        $params = [];
-        foreach ($subAccount as $account){
-            // 获取计划ID
-            $campaignIds = [];
+        $params = $this->getCampaignParamByAccount($subAccount);
 
-            $campaigns = (new BaiDuCampaignModel())
-                ->where('account_id',$account['account_id'])
-                ->get();
-
-            foreach ($campaigns as $campaign){
-                $this->setAccountMap($account);
-                $campaignIds[] = $campaign['id'];
-            }
-
-            if(empty($campaignIds)) continue;
-
-            $params[] = [
-                'campaign_ids' => $campaignIds,
-                'account_name'      => $account['name']
-            ];
-        }
         $saveData = [];
         $list = $this->sdk->multiGetAdGroupFeed($params);
         foreach ($list as $item){
