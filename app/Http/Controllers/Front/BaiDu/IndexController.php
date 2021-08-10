@@ -32,7 +32,7 @@ class IndexController extends FrontController
             return $this->forbidden();
         }
 
-        $this->bdAdgroup($request);
+        return $this->bdAdgroup($request);
 //        $this->testCreateClick();
 //        $this->testModelData();
 //        $this->testConvertMatch();
@@ -168,7 +168,6 @@ class IndexController extends FrontController
         ];
 
         (new BaiDuAdgroupService())->batchSave(BaiDuAdgroupModel::class,$saveData);
-
-        $this->success();
+        return $this->success();
     }
 }
