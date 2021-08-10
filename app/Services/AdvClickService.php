@@ -32,11 +32,11 @@ class AdvClickService extends ClickService
         ]);
         Functions::hasEnum(AdvClickSourceEnum::class, $data['click_source']);
 
-        if($data['imei'] == 'NULL') $data['imei'] = null;
-        if($data['idfa'] == 'NULL') $data['idfa'] = null;
-        if($data['muid'] == 'NULL') $data['muid'] = null;
-        if($data['android_id'] == 'NULL') $data['android_id'] = null;
-        if($data['oaid'] == 'NULL') $data['oaid'] = null;
+        if(isset($data['imei']) && $data['imei'] == 'NULL') $data['imei'] = null;
+        if(isset($data['idfa']) && $data['idfa'] == 'NULL') $data['idfa'] = null;
+        if(isset($data['muid']) && $data['muid'] == 'NULL') $data['muid'] = null;
+        if(isset($data['android_id']) && $data['android_id'] == 'NULL') $data['android_id'] = null;
+        if(isset($data['oaid']) && $data['oaid'] == 'NULL') $data['oaid'] = null;
 
         $muid = '';
         if(!empty($data['imei'])){
