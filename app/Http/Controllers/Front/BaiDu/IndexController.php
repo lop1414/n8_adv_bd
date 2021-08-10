@@ -8,6 +8,9 @@ use App\Common\Enums\ConvertTypeEnum;
 use App\Common\Enums\PlatformEnum;
 use App\Common\Services\SystemApi\AdvBdApiService;
 use App\Common\Services\SystemApi\AdvOceanApiService;
+use App\Models\BaiDu\BaiDuCreativeModel;
+use App\Services\BaiDu\BaiDuAdgroupService;
+use App\Services\BaiDu\BaiDuCreativeService;
 use Illuminate\Http\Request;
 
 class IndexController extends FrontController
@@ -28,11 +31,12 @@ class IndexController extends FrontController
             return $this->forbidden();
         }
 
+        $this->bdAdgroup($request);
 //        $this->testCreateClick();
 //        $this->testModelData();
 //        $this->testConvertMatch();
 //        $this->testConvertCallbackGet();
-        $this->testUpdateChannelAdgroup();
+//        $this->testUpdateChannelAdgroup();
     }
 
     private function testCreateClick(){
@@ -136,5 +140,36 @@ class IndexController extends FrontController
 
         $a = new AdvBdApiService();
         $a->apiUpdateChannelAdgroup($channelId, $adgroupIds,PlatformEnum::DEFAULT,[1]);
+    }
+
+
+    public function bdAdgroup($request){
+        $req = $request->all();
+        $item = $req['data'];
+
+        $extend = $item['extend'];
+        $saveData[] = [
+            'id'                => $extend['adgroupFeedId'],
+            'account_id'        => $item['account_id'],
+            'campaign_id'       => $extend['campaignFeedId'],
+            'name'              => $extend['adgroupFeedName'],
+            'pause'             => $extend['pause'],
+            'status'            => $extend['status'],
+            'bid'               => $extend['bid'] * 100,
+            'bidtype'           => $extend['bidtype'],
+            'atp_feed_id'       => $extend['atpFeedId'],
+            'ocpc_trans_from'   => $extend['ocpc']['transFrom'] ?? 0,
+            'ocpc_bid'          => ($extend['ocpc']['ocpcBid'] ?? 0) * 100,
+            'ocpc_trans_type'   => $extend['ocpc']['transType'] ?? 0,
+            'ocpc_pay_mode'     => $extend['ocpc']['payMode'] ?? 0,
+            'extends'           => json_encode($extend),
+            'remark_status'     => '',
+            'created_at'        => date('Y-m-d H:i:s'),
+            'updated_at'        => date('Y-m-d H:i:s'),
+        ];
+
+
+        (new BaiDuAdgroupService())->batchSave(BaiDuCreativeModel::class,$saveData);
+
     }
 }
