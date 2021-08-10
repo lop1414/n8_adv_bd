@@ -8,6 +8,7 @@ use App\Common\Enums\ConvertTypeEnum;
 use App\Common\Enums\PlatformEnum;
 use App\Common\Services\SystemApi\AdvBdApiService;
 use App\Common\Services\SystemApi\AdvOceanApiService;
+use App\Models\BaiDu\BaiDuAdgroupModel;
 use App\Models\BaiDu\BaiDuCreativeModel;
 use App\Services\BaiDu\BaiDuAdgroupService;
 use App\Services\BaiDu\BaiDuCreativeService;
@@ -145,7 +146,6 @@ class IndexController extends FrontController
 
     public function bdAdgroup($request){
         $item = $request->all();
-
         $extend = $item['extend'];
         $saveData[] = [
             'id'                => $extend['adgroupFeedId'],
@@ -167,8 +167,7 @@ class IndexController extends FrontController
             'updated_at'        => date('Y-m-d H:i:s'),
         ];
 
-
-        (new BaiDuAdgroupService())->batchSave(BaiDuCreativeModel::class,$saveData);
+        (new BaiDuAdgroupService())->batchSave(BaiDuAdgroupModel::class,$saveData);
 
     }
 }
