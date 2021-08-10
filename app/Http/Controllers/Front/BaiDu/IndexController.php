@@ -144,8 +144,7 @@ class IndexController extends FrontController
 
 
     public function bdAdgroup($request){
-        $req = $request->all();
-        $item = $req['data'];
+        $item = $request->all();
 
         $extend = $item['extend'];
         $saveData[] = [

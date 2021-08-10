@@ -122,5 +122,5 @@ $router->group(['middleware' => ['access_control_allow_origin']], function () us
 
 
 // 测试
-$router->post('front/baidu/test', 'Front\BaiDu\IndexController@test');
+$router->get('front/baidu/test', 'Front\BaiDu\IndexController@test');
 
