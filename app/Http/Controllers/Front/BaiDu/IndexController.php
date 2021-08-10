@@ -169,5 +169,6 @@ class IndexController extends FrontController
 
         (new BaiDuAdgroupService())->batchSave(BaiDuAdgroupModel::class,$saveData);
 
+        return ['code' => 0];
     }
 }
