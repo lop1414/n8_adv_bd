@@ -185,7 +185,7 @@ class AdvConvertCallbackService extends ConvertCallbackService
     public function getEventTypeMap(){
         return [
             ConvertTypeEnum::ACTIVATION => 6,   // 下载按钮点击
-            ConvertTypeEnum::REGISTER => 0,
+            ConvertTypeEnum::REGISTER => 51,    // 有意向客户
             ConvertTypeEnum::FOLLOW => 51,      //有意向客户
             ConvertTypeEnum::ADD_DESKTOP => 51,  //有意向客户
             ConvertTypeEnum::PAY => 19,         //一句话咨询
