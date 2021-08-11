@@ -50,27 +50,8 @@ class AdvConvertCallbackService extends ConvertCallbackService
 //        if(!empty($payAmount)){
 //            $payAmount =  $item->extends->amount;
 //        }
-        $this->runCallback($item->click, $eventType, $payAmount);
 
-        return true;
-    }
-
-    /**
-     * @param $click
-     * @param $eventType
-     * @return bool
-     * @throws CustomException
-     * 执行回传
-     */
-    /**
-     * @param $click
-     * @param $eventType
-     * @param int $payAmount 付费金额
-     * @return bool
-     * @throws CustomException
-     */
-    public function runCallback($click, $eventType,$payAmount = 0){
-
+        $click = $item->click;
         if(!empty($click->link)){
             $this->linkCallback($click, $eventType, $payAmount);
 
@@ -81,6 +62,8 @@ class AdvConvertCallbackService extends ConvertCallbackService
 
         return true;
     }
+
+
 
 
 
