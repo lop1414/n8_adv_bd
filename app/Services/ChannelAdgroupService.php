@@ -195,7 +195,7 @@ class ChannelAdgroupService extends BaseService
 
             $baiDuFeedCreatives = (new BaiDuCreativeModel())
                 ->where('id','>',$lastMaxId)
-                ->whereBetween('addtime', [$startTime, $endTime])
+                ->whereBetween('updated_at', [$startTime, $endTime])
                 ->skip(0)
                 ->take(1000)
                 ->orderBy('id')
