@@ -95,4 +95,23 @@ class AdvConvertMatchService extends ConvertMatchService
 
         return $builder;
     }
+
+
+
+    /**
+     * @param $userAgent1
+     * @param $userAgent2
+     * @return bool
+     * 是否相同 user_agent
+     */
+    protected function isSameUserAgent($userAgent1, $userAgent2){
+
+        // 平台校验
+        $platformChcek = $userAgent1->platform() == $userAgent2->platform();
+
+        // 平台版本校验
+        $platformVersionCheck = $userAgent1->version($userAgent1->platform()) == $userAgent2->version($userAgent2->platform());
+
+        return $platformChcek && $platformVersionCheck;
+    }
 }
