@@ -54,9 +54,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('convert_callback')->cron('* * * * *');
 
         // 百度同步任务
-        $schedule->command('baidu:sync --type=campaign')->cron('*/15 * * * *');
-        $schedule->command('baidu:sync --type=adgroup')->cron('*/15 * * * *');
-        $schedule->command('baidu:sync --type=creative')->cron('*/15 * * * *');
+        $schedule->command('baidu:sync --type=campaign')->cron('*/20 * * * *');
+        $schedule->command('baidu:sync --type=adgroup')->cron('*/20 * * * *');
+        $schedule->command('baidu:sync --type=creative')->cron('*/20 * * * *');
 
         // 百度报表同步
         $schedule->command('baidu:sync_account_report --date=today --running=1')->cron('*/5 * * * *');
