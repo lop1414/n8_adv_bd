@@ -58,7 +58,7 @@ class AdvConvertCallbackService extends ConvertCallbackService
 
 
 
-    public function runCallback($click,$eventType,$payAmount){
+    public function runCallback($click,$eventType,$payAmount = 0){
         if(!empty($click->link)){
             return $this->linkCallback($click, $eventType, $payAmount);
 
