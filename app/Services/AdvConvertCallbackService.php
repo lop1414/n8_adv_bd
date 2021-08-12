@@ -51,16 +51,22 @@ class AdvConvertCallbackService extends ConvertCallbackService
 //            $payAmount =  $item->extends->amount;
 //        }
 
-        $click = $item->click;
+        $this->runCallback($item->click,$eventType,$payAmount);
+
+        return true;
+    }
+
+
+
+    public function runCallback($click,$eventType,$payAmount){
         if(!empty($click->link)){
-            $this->linkCallback($click, $eventType, $payAmount);
+            return $this->linkCallback($click, $eventType, $payAmount);
 
         }else{
-            $this->callbackUrlCallback($click, $eventType, $payAmount);
+            return $this->callbackUrlCallback($click, $eventType, $payAmount);
 
         }
 
-        return true;
     }
 
 
