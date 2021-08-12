@@ -141,6 +141,7 @@ class AdvConvertCallbackService extends ConvertCallbackService
                 ],
             ]);
         }
+        return true;
     }
 
 
