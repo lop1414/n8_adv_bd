@@ -8,6 +8,7 @@ use App\Sdks\BaiDu\Traits\AccountFeed;
 use App\Sdks\BaiDu\Traits\AdgroupFeed;
 use App\Sdks\BaiDu\Traits\CampaignFeed;
 use App\Sdks\BaiDu\Traits\CreativeFeed;
+use App\Sdks\BaiDu\Traits\Image;
 use App\Sdks\BaiDu\Traits\ReportFeed;
 use App\Sdks\BaiDu\Traits\Error;
 use App\Sdks\BaiDu\Traits\MultiRequest;
@@ -31,6 +32,7 @@ class BaiDu
     use AdgroupFeed;
     use CreativeFeed;
     use ReportFeed;
+    use Image;
 
     /**
      * 公共接口地址
@@ -71,4 +73,21 @@ class BaiDu
         $sdkPath = rtrim(__DIR__ .'/'. $path, '/');
         return $sdkPath;
     }
+
+
+    /**
+     * @param $file
+     * @return string
+     * 获取 素材的md5
+     */
+    public function getMaterialMd5($file){
+        if($fp = fopen($file,"rb", 0))
+        {
+            $gambar = fread($fp,filesize($file));
+            fclose($fp);
+
+            return md5($gambar);
+        }
+    }
+
 }

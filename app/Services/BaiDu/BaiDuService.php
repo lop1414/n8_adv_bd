@@ -4,6 +4,7 @@ namespace App\Services\BaiDu;
 
 use App\Common\Enums\StatusEnum;
 use App\Common\Services\BaseService;
+use App\Common\Tools\CustomException;
 use App\Enums\BaiDu\BaiDuAdgroupStatusEnum;
 use App\Enums\RemarkStatusEnum;
 use App\Models\BaiDu\BaiDuAccountModel;
@@ -133,8 +134,12 @@ class BaiDuService extends BaseService
     }
 
 
-
-    public function syncItem($subAccount){}
+    public function syncItem($subAccount){
+        throw new CustomException([
+            'code' => 'METHOD_NOT_IMPLEMENTED',
+            'message' => '请实现 syncItem 方法',
+        ]);
+    }
 
 
 
@@ -323,6 +328,10 @@ class BaiDuService extends BaseService
         }
         return $params;
     }
+
+
+
+
 
 
 }

@@ -10,6 +10,16 @@ use App\Models\BaiDu\BaiDuFeedAccountModel;
 class BaiDuAccountService extends BaiDuService
 {
 
+    protected $account;
+
+
+    public function read($accountId){
+        if(empty($this->account[$accountId])){
+            $this->account[$accountId] = (new BaiDuAccountModel())->find($accountId);
+        }
+        return $this->account[$accountId];
+    }
+
 
     public function syncSubAccount(){
         $list = $this->sdk->getSubAccount();
