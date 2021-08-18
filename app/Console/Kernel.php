@@ -64,7 +64,7 @@ class Kernel extends ConsoleKernel
 
         // 百度创意报表同步
         $schedule->command('baidu:sync_creative_report --date=today --running=1 --run_by_account_cost=1')->cron('*/5 * * * *');
-        $schedule->command('baidu:sync_creative_report --date=yesterday --delete=1 --key_suffix=yesterday')->cron('25-30 9 * * *');
+        $schedule->command('baidu:sync_creative_report --date=yesterday --key_suffix=yesterday')->cron('25-30 9 * * *');
 
     }
 }
