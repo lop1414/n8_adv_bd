@@ -114,4 +114,19 @@ class AdvConvertMatchService extends ConvertMatchService
 
         return $platformChcek && $platformVersionCheck;
     }
+
+
+
+
+    /**
+     * @param $data
+     * @param $items
+     * @return |null
+     * 按IP重匹配
+     */
+    protected function reMatchByIp($data, $items){
+        if(empty($items)) return null;
+        return $items->first();
+    }
+
 }
