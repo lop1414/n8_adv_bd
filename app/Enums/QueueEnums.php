@@ -5,6 +5,7 @@ namespace App\Enums;
 class QueueEnums
 {
     const CLICK = 'click';
+    const PAGE_CLICK = 'PAGE_CLICK';
 
     /**
      * @var string
@@ -18,5 +19,6 @@ class QueueEnums
      */
     static public $list = [
         ['id' => self::CLICK, 'name' => '点击'],
+        ['id' => self::PAGE_CLICK, 'name' => '页面点击'],
     ];
 }

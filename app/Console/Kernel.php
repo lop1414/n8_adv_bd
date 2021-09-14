@@ -7,6 +7,7 @@ use App\Common\Console\Queue\QueueClickCommand;
 use App\Console\Commands\BaiDu\BaiDuSyncCommand;
 use App\Console\Commands\BaiDu\Report\BaiDuSyncAccountReportCommand;
 use App\Console\Commands\BaiDu\Report\BaiDuSyncCreativeReportCommand;
+use App\Console\Commands\Queue\QueuePageClickCommand;
 use App\Console\Commands\SyncChannelAdgroupCommand;
 use App\Console\Commands\TestCommand;
 use Illuminate\Console\Scheduling\Schedule;
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
 
         // 队列
         QueueClickCommand::class,
+        QueuePageClickCommand::class,
 
         // 转化回传
         ConvertCallbackCommand::class,
@@ -45,6 +47,7 @@ class Kernel extends ConsoleKernel
     {
         // 队列
         $schedule->command('queue:click')->cron('* * * * *');
+        $schedule->command('queue:page_click')->cron('* * * * *');
 
         // 同步渠道-推广单元
         $schedule->command('sync_channel_adgroup --date=today')->cron('*/2 * * * *');
