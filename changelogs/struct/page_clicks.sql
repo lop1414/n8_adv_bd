@@ -11,7 +11,7 @@
  Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 14/09/2021 19:06:23
+ Date: 14/09/2021 19:23:21
 */
 
 SET NAMES utf8mb4;
@@ -27,6 +27,7 @@ CREATE TABLE `page_clicks` (
   `ua` varchar(1024) NOT NULL DEFAULT '' COMMENT 'user agent',
   `click_at` timestamp NULL DEFAULT NULL COMMENT '点击时间',
   `extends` text NOT NULL COMMENT '扩展字段',
+  `fix_status` varchar(50) NOT NULL COMMENT '修正状态',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   `updated_at` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`bd_vid`),

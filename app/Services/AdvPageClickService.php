@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Common\Services\ClickService;
 use App\Common\Tools\CustomException;
+use App\Enums\FixStatusEnum;
 use App\Enums\QueueEnums;
 use App\Models\PageClickModel;
 
@@ -57,6 +58,7 @@ class AdvPageClickService extends ClickService
         $clickModel->ua = $data['ua'] ?? '';
         $clickModel->click_at = $data['click_at'] ?? null;
         $clickModel->extends = $data['extends'] ?? [];
+        $clickModel->fix_status = FixStatusEnum::WAITING;
         $ret = $clickModel->save();
         return $ret;
     }
