@@ -47,6 +47,43 @@ trait Request
 
     /**
      * @param $url
+     * @param $param
+     * @param string $method
+     * @param array $header
+     * @param array $option
+     * @return mixed
+     * @throws CustomException
+     * 携带认证表单请求
+     */
+    public function formDataRequest($url,$param, $method = 'POST', $header = [], $option = []){
+        $reqParam =  [
+            'username'  => $this->getAccountName(),
+            'password'  => $this->getAccountPassword(),
+            'token'     => $this->getToken()
+        ];
+
+        if(!empty($this->getTargetAccountName())){
+            $reqParam['target'] = $this->getTargetAccountName();
+        }
+
+        if(!empty($param)){
+            $reqParam = array_merge($reqParam,$param);
+        }
+//dd(json_encode($reqParam));
+        $header = array_merge([
+            'Content-Type: multipart/form-data;',
+            'username:' . $this->getAccountName(),
+            'password:' . $this->getAccountPassword(),
+            'token:' . $this->getToken(),
+            'target:' . $this->getTargetAccountName(),
+        ], $header);
+        return $this->publicRequest($url, json_encode($reqParam), $method, $header, $option);
+
+    }
+
+
+    /**
+     * @param $url
      * @param array $param
      * @param string $method
      * @param array $header

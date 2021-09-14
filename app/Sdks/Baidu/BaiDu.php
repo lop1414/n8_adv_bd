@@ -17,6 +17,7 @@ use App\Sdks\BaiDu\Traits\Token;
 use App\Sdks\BaiDu\Traits\Account;
 use App\Sdks\BaiDu\Traits\AccountPassword;
 use App\Sdks\BaiDu\Traits\Request;
+use App\Sdks\BaiDu\Traits\Video;
 
 class BaiDu
 {
@@ -33,6 +34,7 @@ class BaiDu
     use CreativeFeed;
     use ReportFeed;
     use Image;
+    use Video;
 
     /**
      * 公共接口地址

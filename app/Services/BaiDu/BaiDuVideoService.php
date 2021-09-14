@@ -6,7 +6,7 @@ namespace App\Services\BaiDu;
 
 use App\Models\BaiDu\BaiDuImageModel;
 
-class BaiDuImageService extends BaiDuService
+class BaiDuVideoService extends BaiDuService
 {
 
     protected $baiduAccountService;
@@ -27,14 +27,14 @@ class BaiDuImageService extends BaiDuService
     public function upload($accountId,$file){
         $account = $this->baiduAccountService->read($accountId);
         $this->sdk->setTargetAccountName($account->name);
-        $data = $this->sdk->uploadImage($file);
-        return $data[0];
+        $data = $this->sdk->uploadVideo($file);
+        dd($data);
     }
 
 
     public function read($accountName,$id){
        $this->sdk->setTargetAccountName($accountName);
-       $data = $this->sdk->readImage($id);
+       $data = $this->sdk->readVideo($id);
        if(empty($data[0]['listData'])){
             return [];
        }
