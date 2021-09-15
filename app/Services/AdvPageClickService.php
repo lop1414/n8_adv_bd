@@ -35,13 +35,16 @@ class AdvPageClickService extends ClickService
         $clickAt = date('Y-m-d H:i:s', intval($data['click_at'] / 1000));
 
         $ret = parse_url($data['link']);
+        if(empty($ret['query'])){
+            $ret['query'] = '';
+        }
         parse_str($ret['query'], $param);
 
         return [
             'ip'       => $data['ip'],
             'ua'       => $data['ua'],
             'click_at' => $clickAt,
-            'bd_vid'   => $param['bd_vid'],
+            'bd_vid'   => $param['bd_vid'] ?? '',
             'extends'  => $data
         ];
     }
