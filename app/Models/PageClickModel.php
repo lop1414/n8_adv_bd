@@ -18,7 +18,7 @@ class PageClickModel extends BaseModel
      *
      * @var string
      */
-    protected $primaryKey = 'bd_vid';
+    protected $primaryKey = 'id';
 
     /**
      * 属性访问器
