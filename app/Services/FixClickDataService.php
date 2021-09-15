@@ -17,6 +17,7 @@ class FixClickDataService extends BaseService
         do{
             $list = $pageClickModel
                 ->where('fix_status',FixStatusEnum::WAITING)
+                ->where('bd_vid','!=','')
                 ->where('id','>',$lastId)
                 ->skip(0)
                 ->take(1000)
