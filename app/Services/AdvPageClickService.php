@@ -37,7 +37,9 @@ class AdvPageClickService extends ClickService
         $ret = parse_url($data['link']);
         if(!empty($ret['query'])){
             parse_str($ret['query'], $param);
-        }else{
+        }
+
+        if(!isset($param['bd_vid'])){
             $param['bd_vid'] = '';
         }
 
