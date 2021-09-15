@@ -22,7 +22,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `page_clicks`;
 CREATE TABLE `page_clicks` (
-  `id` bigint(11) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `bd_vid` varchar(50) NOT NULL,
   `ip` varchar(50) NOT NULL DEFAULT '' COMMENT 'IP地址',
   `ua` varchar(1024) NOT NULL DEFAULT '' COMMENT 'user agent',
@@ -35,5 +35,4 @@ CREATE TABLE `page_clicks` (
   KEY `ip` (`ip`) USING BTREE,
   KEY `bd_vid` (`bd_vid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='百度页面转发点击表';
-
 SET FOREIGN_KEY_CHECKS = 1;
