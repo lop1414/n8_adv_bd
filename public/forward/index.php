@@ -89,7 +89,7 @@ $param = [
         'ip' => $ip,
         'ua' => $ua,
         'click_at' => time() .'000',
-        'link' => base64_decode($logidUrl),
+        'link' => $logidUrl,
 ];
 $reportUrl .= http_build_query($param);
 $ret = file_get_contents($reportUrl);
