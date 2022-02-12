@@ -140,8 +140,6 @@ class ChannelAdgroupService extends BaseService
             'start_datetime' => 'required',
             'end_datetime' => 'required',
         ]);
-        Functions::timeCheck($param['start_datetime']);
-        Functions::timeCheck($param['end_datetime']);
         $channelAdgroupModel = new ChannelAdgroupModel();
         $channelAdgroups = $channelAdgroupModel->whereBetween('updated_at', [$param['start_datetime'], $param['end_datetime']])->get();
 
